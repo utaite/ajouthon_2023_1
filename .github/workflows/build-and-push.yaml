@@ -18,6 +18,6 @@ jobs:
       - name: Push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ajouthon2023_fastapi
           push: true
           tags: mindersturmoil/ajouthon2023:latest
