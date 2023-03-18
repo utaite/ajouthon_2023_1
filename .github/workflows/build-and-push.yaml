@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Docker image
-        run: docker build -t mindersturmoil/ajouthon2023 -f Dockerfile ajouthon2023_fastapi
+        run: docker build -t mindersturmoil/ajouthon2023 -f ajouthon2023_fastapi/Dockerfile ajouthon2023_fastapi
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
