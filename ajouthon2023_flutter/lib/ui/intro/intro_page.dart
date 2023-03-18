@@ -46,9 +46,7 @@ class IntroPage extends GetView<IntroPageController> {
                             labelText: "학년을 입력해주세요",
                             floatingLabelStyle: TextStyle(color: Colors.black),
                             labelStyle: TextStyle(color: Colors.black),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 1, color: Colors.black)),
+                            enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
                           ),
                         ),
                       ),
@@ -62,9 +60,7 @@ class IntroPage extends GetView<IntroPageController> {
                           padding: EdgeInsets.symmetric(vertical: 20),
                           side: BorderSide(color: Colors.black),
                         ),
-                        child: Text(state.department == -1
-                            ? "학과를 선택하세요"
-                            : state.departmentList[state.department]),
+                        child: Text(state.department == -1 ? "학과를 선택하세요" : state.departmentList[state.department]),
                       ),
                     ),
                     SizedBox(height: 25),
@@ -78,9 +74,7 @@ class IntroPage extends GetView<IntroPageController> {
                           labelText: "학번을 입력해주세요",
                           floatingLabelStyle: TextStyle(color: Colors.black),
                           labelStyle: TextStyle(color: Colors.black),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.black)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
                         ),
                       ),
                     ),
@@ -110,12 +104,8 @@ class IntroPage extends GetView<IntroPageController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(
-                              onPressed: () => controller.onPressedIndex(1),
-                              child: Text("네")),
-                          TextButton(
-                              onPressed: () => controller.onPressedIndex(2),
-                              child: Text("아니요")),
+                          TextButton(onPressed: () => controller.onPressedIndex(1), child: Text("네")),
+                          TextButton(onPressed: () => controller.onPressedIndex(2), child: Text("아니요")),
                         ],
                       ),
                     ],
@@ -135,9 +125,7 @@ class IntroPage extends GetView<IntroPageController> {
                             padding: EdgeInsets.symmetric(vertical: 20),
                             side: BorderSide(color: Colors.black),
                           ),
-                          child: Text(state.pluralIndex == -1
-                              ? "전공 유형을 선택하세요"
-                              : state.majorList[state.pluralIndex]),
+                          child: Text(state.pluralIndex == -1 ? "전공 유형을 선택하세요" : state.majorList[state.pluralIndex]),
                         ),
                       ),
                     ),
@@ -153,9 +141,7 @@ class IntroPage extends GetView<IntroPageController> {
                             padding: EdgeInsets.symmetric(vertical: 20),
                             side: BorderSide(color: Colors.black),
                           ),
-                          child: Text(state.pluralMajor == -1
-                              ? "학과를 선택하세요"
-                              : state.departmentList[state.pluralMajor]),
+                          child: Text(state.pluralMajor == -1 ? "학과를 선택하세요" : state.departmentList[state.pluralMajor]),
                         ),
                       ),
                     ),
@@ -182,12 +168,8 @@ class IntroPage extends GetView<IntroPageController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(
-                              onPressed: () => controller.onPressedIndex(1),
-                              child: Text("네")),
-                          TextButton(
-                              onPressed: () => controller.onPressedIndex(2),
-                              child: Text("아니요")),
+                          TextButton(onPressed: () => controller.onPressedIndex(1), child: Text("네")),
+                          TextButton(onPressed: () => controller.onPressedIndex(2), child: Text("아니요")),
                         ],
                       ),
                     ],
@@ -208,9 +190,7 @@ class IntroPage extends GetView<IntroPageController> {
                           labelText: "이수 학점을 입력해주세요",
                           floatingLabelStyle: TextStyle(color: Colors.black),
                           labelStyle: TextStyle(color: Colors.black),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.black)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
                         ),
                       ),
                     ),
@@ -237,12 +217,8 @@ class IntroPage extends GetView<IntroPageController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(
-                              onPressed: () => controller.onPressedIndex(1),
-                              child: Text("네")),
-                          TextButton(
-                              onPressed: () => controller.onPressedIndex(2),
-                              child: Text("아니요")),
+                          TextButton(onPressed: () => controller.onPressedIndex(1), child: Text("네")),
+                          TextButton(onPressed: () => controller.onPressedIndex(2), child: Text("아니요")),
                         ],
                       ),
                     ],
@@ -263,9 +239,7 @@ class IntroPage extends GetView<IntroPageController> {
                           labelText: "이수 학점을 입력해주세요",
                           floatingLabelStyle: TextStyle(color: Colors.black),
                           labelStyle: TextStyle(color: Colors.black),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(width: 1, color: Colors.black)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
                         ),
                       ),
                     ),
@@ -292,12 +266,8 @@ class IntroPage extends GetView<IntroPageController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(
-                              onPressed: () => controller.onPressedIndex(1),
-                              child: Text("네")),
-                          TextButton(
-                              onPressed: () => controller.onPressedIndex(2),
-                              child: Text("아니요")),
+                          TextButton(onPressed: () => controller.onPressedIndex(1), child: Text("네")),
+                          TextButton(onPressed: () => controller.onPressedIndex(2), child: Text("아니요")),
                         ],
                       ),
                     ],
@@ -318,9 +288,7 @@ class IntroPage extends GetView<IntroPageController> {
                           labelText: "이수 학점을 입력해주세요",
                           floatingLabelStyle: TextStyle(color: Colors.black),
                           labelStyle: TextStyle(color: Colors.black),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(width: 1, color: Colors.black)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
                         ),
                       ),
                     ),
@@ -333,9 +301,7 @@ class IntroPage extends GetView<IntroPageController> {
                     ),
                   ],
                 ),
-                Center(
-
-                )
+                Center()
               ],
             ),
           ),

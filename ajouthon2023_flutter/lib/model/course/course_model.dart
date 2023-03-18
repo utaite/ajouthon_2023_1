@@ -1,3 +1,5 @@
+import 'package:ajouthon2023/constant/extension.dart';
+
 import '../../constant/getx/get_model.dart';
 
 class CourseModel extends GetModel {
@@ -21,7 +23,7 @@ class CourseModel extends GetModel {
   final int time;
   final int grade;
   final String summary;
-  final String prerequisite;
+  final Iterable<String> prerequisite;
 
   static const CourseModel _empty = CourseModel(
     uuid: '',
@@ -32,13 +34,19 @@ class CourseModel extends GetModel {
     time: 0,
     grade: 0,
     summary: '',
-    prerequisite: '',
+    prerequisite: [],
   );
 
   factory CourseModel.empty() => _empty;
 
   @override
   bool get isEmpty => this == _empty;
+
+  String get typeString => ['전공필수', '전공선택', '교양필수'][type].elvis;
+
+  String get gradeString => '${(grade + 1) ~/ 2}-${(grade + 1) % 2 + 1}학기';
+
+  Iterable<String> get tags => [gradeString, typeString, '$credit학점', '선수과목 ${prerequisite.isset ? 'O' : 'X'}'];
 
   factory CourseModel.fromJson(dynamic json) => json is Map<String, dynamic>
       ? _empty.copyWith(
@@ -50,7 +58,9 @@ class CourseModel extends GetModel {
           time: json['time'],
           grade: json['grade'],
           summary: json['summary'],
-          prerequisite: json['prerequisite'],
+          prerequisite: [
+            ...Iterable.castFrom(json['prerequisite'] ?? const []),
+          ],
         )
       : _empty;
 
@@ -64,7 +74,7 @@ class CourseModel extends GetModel {
     int? time,
     int? grade,
     String? summary,
-    String? prerequisite,
+    Iterable<String>? prerequisite,
   }) {
     return CourseModel(
       uuid: uuid ?? this.uuid,
