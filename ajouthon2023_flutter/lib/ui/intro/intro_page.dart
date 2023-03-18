@@ -19,7 +19,8 @@ class IntroPage extends GetView<IntroPageController> {
           body: SafeArea(
             child: Column(
               children: [
-                Center( //학년 입력 TextField
+                Center(
+                  //학년 입력 TextField
                   child: TextField(
                     onChanged: controller.onChangedGrade,
                     style: TextStyle(color: Colors.blue),
@@ -28,13 +29,12 @@ class IntroPage extends GetView<IntroPageController> {
                       floatingLabelStyle: TextStyle(color: Colors.blue),
                       labelStyle: TextStyle(color: Colors.blue),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                          BorderSide(width: 1, color: Colors.blueAccent)),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)), borderSide: BorderSide(width: 1, color: Colors.blueAccent)),
                     ),
                   ),
                 ),
-                Center( //학과 입력 DropdownButton
+                Center(
+                  //학과 입력 DropdownButton
                   child: DropdownButton<int>(
                     onChanged: controller.onChangedDepartment,
                     value: state.department,
@@ -49,7 +49,8 @@ class IntroPage extends GetView<IntroPageController> {
                     }).toList(),
                   ),
                 ),
-                Center( //학번 입력 TextField
+                Center(
+                  //학번 입력 TextField
                   child: TextField(
                     onChanged: controller.onChangedId,
                     style: TextStyle(color: Colors.blue),
@@ -58,13 +59,12 @@ class IntroPage extends GetView<IntroPageController> {
                       floatingLabelStyle: TextStyle(color: Colors.blue),
                       labelStyle: TextStyle(color: Colors.blue),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                          BorderSide(width: 1, color: Colors.blueAccent)),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)), borderSide: BorderSide(width: 1, color: Colors.blueAccent)),
                     ),
                   ),
                 ),
-                Row( //복수전공 체크 버튼
+                Row(
+                  //복수전공 체크 버튼
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('파란색 '),
@@ -80,7 +80,8 @@ class IntroPage extends GetView<IntroPageController> {
                     ),
                   ],
                 ),
-                Row( //교환학생 체크 여부
+                Row(
+                  //교환학생 체크 여부
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('파란색 '),
@@ -96,11 +97,13 @@ class IntroPage extends GetView<IntroPageController> {
                     ),
                   ],
                 ),
-                Center( //과목 선택 버튼
-                    child: OutlinedButton(
-                  onPressed: () {},
-                  child: Text("다음"),
-                ))
+                Center(
+                  //과목 선택 버튼
+                  child: OutlinedButton(
+                    onPressed: controller.onPressedNext,
+                    child: Text("다음"),
+                  ),
+                )
               ],
             ),
           ),
