@@ -21,6 +21,9 @@ enum PrefType {
   department,
   pluralMajor,
   pluralIndex,
+  exchangeGrade,
+  fieldPracticeGrade,
+  paranGrade,
 }
 
 class PrefHelper {

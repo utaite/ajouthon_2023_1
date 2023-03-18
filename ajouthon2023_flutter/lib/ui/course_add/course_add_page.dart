@@ -119,7 +119,7 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                               child: const SizedBox(width: 5),
                             ),
                             TextSpan(
-                              text: '수강한 과목을 선택해주세요.',
+                              text: '수강할 과목을 선택해주세요.',
                               style: textBlack22.copyWith(
                                 fontWeight: FontWeight.bold,
                                 height: 4 / 3,

@@ -26,6 +26,11 @@ class RouteModel extends GetModel {
     icon: '',
   );
 
+  static final RouteModel _splash = _empty.copyWith(
+    navigatorId: randomInt,
+    routes: Routes.splash,
+  );
+
   static final RouteModel _main = _empty.copyWith(
     navigatorId: randomInt,
     routes: Routes.main,
@@ -52,6 +57,8 @@ class RouteModel extends GetModel {
   );
 
   factory RouteModel.empty() => _empty;
+
+  factory RouteModel.splash() => _splash;
 
   factory RouteModel.main() => _main;
 

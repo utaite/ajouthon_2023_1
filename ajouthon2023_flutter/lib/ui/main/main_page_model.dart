@@ -7,6 +7,9 @@ class MainPageModel extends GetModel {
     required this.department,
     required this.pluralMajor,
     required this.pluralIndex,
+    required this.exchangeGrade,
+    required this.fieldPracticeGrade,
+    required this.paranGrade,
     required this.collegeList,
     required this.departmentList,
     required this.majorList,
@@ -17,6 +20,9 @@ class MainPageModel extends GetModel {
   final int department;
   final int pluralMajor;
   final int pluralIndex;
+  final int exchangeGrade;
+  final int fieldPracticeGrade;
+  final int paranGrade;
   final Iterable<String> collegeList;
   final Iterable<String> departmentList;
   final Iterable<String> majorList;
@@ -27,6 +33,9 @@ class MainPageModel extends GetModel {
     department: -1,
     pluralMajor: -1,
     pluralIndex: -1,
+    exchangeGrade: 0,
+    fieldPracticeGrade: 0,
+    paranGrade: 0,
     collegeList: [],
     departmentList: [],
     majorList: [],
@@ -38,12 +47,19 @@ class MainPageModel extends GetModel {
   @override
   bool get isEmpty => this == _empty;
 
+  Iterable<MapEntry<int, int>> get etc => [exchangeGrade, fieldPracticeGrade, paranGrade].asMap().entries.where((x) => x.value > 0);
+
+  bool get isEtc => exchangeGrade > 0 || fieldPracticeGrade > 0 || paranGrade > 0;
+
   @override
   MainPageModel copyWith({
     int? id,
     int? department,
     int? pluralMajor,
     int? pluralIndex,
+    int? exchangeGrade,
+    int? fieldPracticeGrade,
+    int? paranGrade,
     Iterable<String>? collegeList,
     Iterable<String>? departmentList,
     Iterable<String>? majorList,
@@ -54,6 +70,9 @@ class MainPageModel extends GetModel {
       department: department ?? this.department,
       pluralMajor: pluralMajor ?? this.pluralMajor,
       pluralIndex: pluralIndex ?? this.pluralIndex,
+      exchangeGrade: exchangeGrade ?? this.exchangeGrade,
+      fieldPracticeGrade: fieldPracticeGrade ?? this.fieldPracticeGrade,
+      paranGrade: paranGrade ?? this.paranGrade,
       collegeList: collegeList ?? this.collegeList,
       departmentList: departmentList ?? this.departmentList,
       majorList: majorList ?? this.majorList,
@@ -62,9 +81,10 @@ class MainPageModel extends GetModel {
   }
 
   @override
-  List<Object?> get props => [id, department, pluralMajor, pluralIndex, collegeList, departmentList, majorList, courses];
+  List<Object?> get props =>
+      [id, department, pluralMajor, pluralIndex, exchangeGrade, fieldPracticeGrade, paranGrade, collegeList, departmentList, majorList, courses];
 
   @override
   String toString() =>
-      'id: $id department: $department pluralMajor: $pluralMajor pluralIndex: $pluralIndex collegeList: $collegeList departmentList: $departmentList majorList: $majorList courses: $courses';
+      'id: $id department: $department pluralMajor: $pluralMajor pluralIndex: $pluralIndex exchangeGrade: $exchangeGrade fieldPracticeGrade: $fieldPracticeGrade paranGrade: $paranGrade collegeList: $collegeList departmentList: $departmentList majorList: $majorList courses: $courses';
 }
