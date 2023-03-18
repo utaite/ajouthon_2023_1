@@ -212,7 +212,7 @@ extension ThemeDataEx on ThemeData {
         toolbarHeight: 54,
         elevation: 1,
         titleTextStyle: textBlack18.copyWith(
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.bold,
         ),
       ),
       colorScheme: (brightness.isDark ? const ColorScheme.dark() : const ColorScheme.light()).copyWith(

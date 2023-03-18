@@ -20,6 +20,15 @@ class CourseAddPage extends GetView<CourseAddPageController> {
           leading: BackButton(
             color: Colors.black,
           ),
+          actions: [
+            TextButton(
+              onPressed: controller.onPressedSave,
+              child: Text(
+                '확인',
+                style: textBlack14,
+              ),
+            ),
+          ],
           title: Text('과목 추가'),
         ),
         backgroundColor: context.theme.scaffoldBackgroundColor,
@@ -39,11 +48,55 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                     const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        '수강할 과목을 찾아보세요.',
-                        style: textBlack22.copyWith(
-                          fontWeight: FontWeight.bold,
-                          height: 4 / 3,
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: SizedBox(
+                                width: 115,
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(),
+                                  ),
+                                  child: Material(
+                                    type: MaterialType.transparency,
+                                    child: InkWell(
+                                      onTap: controller.onPressedGrade,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                        child: Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: '${(state.grade + 2) ~/ 2}-${(state.grade + 2) % 2 + 1}학기',
+                                                style: textBlack22.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              WidgetSpan(
+                                                child: Icon(Icons.expand_more),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            WidgetSpan(
+                              child: const SizedBox(width: 5),
+                            ),
+                            TextSpan(
+                              text: '수강한 과목을 선택해주세요.',
+                              style: textBlack22.copyWith(
+                                fontWeight: FontWeight.bold,
+                                height: 4 / 3,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -179,10 +232,13 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                     ),
                     const SizedBox(height: 20),
                     ...filters.toList().asMap().entries.map((x) {
+                      final isActive = state.checkedCourses[state.grade].elvis.contains(x.value.name);
+
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: DecoratedBox(
                           decoration: BoxDecoration(
+                            color: isActive ? Colors.green.shade100 : null,
                             border: Border.all(
                               width: 0,
                             ),
@@ -222,6 +278,13 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                           ),
                                         ),
                                       ),
+                                      Visibility(
+                                        visible: isActive,
+                                        child: Icon(
+                                          Icons.check,
+                                          color: Colors.green,
+                                        ),
+                                      ),
                                       const SizedBox(width: 10),
                                     ],
                                   ),
@@ -237,7 +300,7 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                         ].map((y) => DecoratedBox(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: Colors.black,
+                                                  color: isActive ? Colors.green : Colors.black,
                                                 ),
                                                 color: context.theme.scaffoldBackgroundColor,
                                                 borderRadius: BorderRadius.circular(6888),

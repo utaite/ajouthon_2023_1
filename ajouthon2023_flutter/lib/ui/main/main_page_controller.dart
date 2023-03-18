@@ -18,7 +18,7 @@ class MainPageController extends GetController<MainPageModel> {
       ...PrefType.values.take(8).map((x) async => await PrefHelper.getPrefStringList(x)),
     ]);
     final credits = await Future.wait([
-      ...PrefType.values.skip(8).map((x) async => await PrefHelper.getPrefStringList(x)),
+      ...PrefType.values.skip(8).take(8).map((x) async => await PrefHelper.getPrefStringList(x)),
     ]);
 
     change(state.copyWith(
@@ -33,6 +33,27 @@ class MainPageController extends GetController<MainPageModel> {
     ));
   }
 
+  void onDismissed(int key, String name) async {
+    final item = state.courses[key].elvis.where((x) => x.name == name).firstOrNull;
+
+    if (item is CourseModel) {
+      change(state.copyWith(
+        courses: Map.fromEntries([
+          ...state.courses.entries.map((x) => MapEntry(
+              x.key,
+              x.key == key
+                  ? [
+                      ...x.value.where((y) => y.name != name),
+                    ]
+                  : x.value)),
+        ]),
+      ));
+
+      await PrefHelper.setPrefStringList(PrefType.values[key], state.courses[key].elvis.map((x) => x.name));
+      await PrefHelper.setPrefStringList(PrefType.values.skip(8).toList()[key], state.courses[key].elvis.map((x) => '${x.credit}'));
+    }
+  }
+
   void onPressedList() async {
     await RouteModel.courseList().toNamed();
   }
@@ -40,8 +61,27 @@ class MainPageController extends GetController<MainPageModel> {
   void onPressedAdd(int key) async {
     await RouteModel.courseAdd().toNamed(
       arguments: [
-        state.courses.values.expand((x) => x).toList(),
+        key,
+        state.courses,
       ],
     );
+
+    final courses = await Future.wait([
+      ...PrefType.values.take(8).map((x) async => await PrefHelper.getPrefStringList(x)),
+    ]);
+    final credits = await Future.wait([
+      ...PrefType.values.skip(8).take(8).map((x) async => await PrefHelper.getPrefStringList(x)),
+    ]);
+
+    change(state.copyWith(
+      courses: Map.fromEntries([
+        ...courses.asMap().entries.map((x) => MapEntry(x.key, [
+              ...x.value.asMap().entries.map((y) => CourseModel.empty().copyWith(
+                    name: y.value,
+                    credit: int.tryParse(credits[x.key][y.key]).elvis,
+                  )),
+            ])),
+      ]),
+    ));
   }
 }

@@ -83,7 +83,7 @@ class IntroPage extends GetView<IntroPageController> {
                       child: OutlinedButton(
                         onPressed: true
                             // state.isFirst
-                            ? () => controller.onPressedIndex(1)
+                            ? controller.onPressedNext
                             : null,
                         child: Text("다음"),
                       ),
