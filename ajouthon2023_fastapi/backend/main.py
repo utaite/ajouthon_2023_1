@@ -11,13 +11,20 @@ async def startup():
 
 
 @app.get("/courses/{num}")
-async def root(num: int):
+async def course(num: int):
     courses = []
 
     if num == 0:  # 소프트웨어학과
         courses = await Courses.all()
 
     return courses
+
+
+@app.get("/course/find/{uuid}")
+async def course_find(uuid: str):
+    course = await Courses.filter(uuid=uuid)
+
+    return course
 
 
 if __name__ == '__main__':
