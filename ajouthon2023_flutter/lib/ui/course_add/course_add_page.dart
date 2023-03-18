@@ -1,3 +1,4 @@
+import 'package:ajouthon2023/constant/colors.dart';
 import 'package:ajouthon2023/constant/styles.dart';
 import 'package:ajouthon2023/model/course/course_model.dart';
 import 'package:get/get.dart';
@@ -37,8 +38,8 @@ class CourseAddPage extends GetView<CourseAddPageController> {
           int isRecommend(CourseModel course) =>
               state.departments.contains(course.department) && [0, 2].contains(course.type) && state.grade == course.grade - 1 ? 1 : -1;
           int isReject(CourseModel course) => course.prerequisite.isset &&
-                  course.prerequisite.every(
-                      (x) => !state.checkedCourses.values.expand((y) => y).map((y) => state.courses.where((z) => z.name == y).firstOrNull?.uuid).contains(x))
+                  course.prerequisite.every((x) =>
+                      !state.checkedCourses.values.expand((y) => y).map((y) => state.courses.where((z) => z.name == y).firstOrNull?.uuid).contains(x))
               ? 1
               : -1;
 
@@ -157,9 +158,10 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                           ...state.departmentList.toList().asMap().keys.map((x) => DecoratedBox(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.black,
+                                    color: colorPrimary,
                                   ),
-                                  color: state.selectDepartments.contains(x) ? Colors.green.shade100 : context.theme.scaffoldBackgroundColor,
+                                  color:
+                                      state.selectDepartments.contains(x) ? colorPrimary.withOpacity(1 / 4) : context.theme.scaffoldBackgroundColor,
                                   borderRadius: BorderRadius.circular(6888),
                                 ),
                                 child: Material(
@@ -171,7 +173,9 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                       padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                       child: Text(
                                         state.departmentList[x].elvis,
-                                        style: textBlack10,
+                                        style: textBlack10.copyWith(
+                                          color: colorPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -201,9 +205,9 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                           ...List.generate(8, (i) => i + 1).map((x) => DecoratedBox(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.black,
+                                    color: colorPrimary,
                                   ),
-                                  color: state.selectGrades.contains(x) ? Colors.green.shade100 : context.theme.scaffoldBackgroundColor,
+                                  color: state.selectGrades.contains(x) ? colorPrimary.withOpacity(1 / 4) : context.theme.scaffoldBackgroundColor,
                                   borderRadius: BorderRadius.circular(6888),
                                 ),
                                 child: Material(
@@ -215,7 +219,9 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                       padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                       child: Text(
                                         '${(x + 1) ~/ 2}-${(x + 1) % 2 + 1}학기',
-                                        style: textBlack10,
+                                        style: textBlack10.copyWith(
+                                          color: colorPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -243,9 +249,9 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                           ...List.generate(3, (i) => i).map((x) => DecoratedBox(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.black,
+                                    color: colorPrimary,
                                   ),
-                                  color: state.selectTypes.contains(x) ? Colors.green.shade100 : context.theme.scaffoldBackgroundColor,
+                                  color: state.selectTypes.contains(x) ? colorPrimary.withOpacity(1 / 4) : context.theme.scaffoldBackgroundColor,
                                   borderRadius: BorderRadius.circular(6888),
                                 ),
                                 child: Material(
@@ -257,7 +263,9 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                       padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                       child: Text(
                                         ['전공필수', '전공선택', '교양필수'][x].elvis,
-                                        style: textBlack10,
+                                        style: textBlack10.copyWith(
+                                          color: colorPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -274,7 +282,7 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: DecoratedBox(
                           decoration: BoxDecoration(
-                            color: isActive ? Colors.green.shade100 : null,
+                            color: isActive ? colorPrimary.withOpacity(1 / 4) : null,
                             border: Border.all(
                               width: 0,
                             ),
@@ -291,6 +299,7 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                             type: MaterialType.transparency,
                             child: InkWell(
                               onTap: () => controller.onPressedCheckedCourse(x.value.name),
+                              onLongPress: () => controller.onLongPressedCheckedCourse(x.value.name),
                               borderRadius: [0, filters.lastIndex].contains(x.key)
                                   ? BorderRadius.only(
                                       topLeft: x.key == 0 ? Radius.circular(10) : Radius.zero,
@@ -317,12 +326,12 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                       isActive
                                           ? Icon(
                                               Icons.check,
-                                              color: Colors.green,
+                                              color: colorPrimary,
                                             )
                                           : isRecommend(x.value) == 1
                                               ? DecoratedBox(
                                                   decoration: BoxDecoration(
-                                                    color: Colors.green,
+                                                    color: colorPrimary,
                                                     borderRadius: BorderRadius.circular(6888),
                                                   ),
                                                   child: Padding(
@@ -367,7 +376,7 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                         ].map((y) => DecoratedBox(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: isActive ? Colors.green : Colors.black,
+                                                  color: colorPrimary,
                                                 ),
                                                 color: context.theme.scaffoldBackgroundColor,
                                                 borderRadius: BorderRadius.circular(6888),
@@ -376,7 +385,9 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                                 padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                                 child: Text(
                                                   y.elvis,
-                                                  style: textBlack10,
+                                                  style: textBlack10.copyWith(
+                                                    color: colorPrimary,
+                                                  ),
                                                 ),
                                               ),
                                             )),

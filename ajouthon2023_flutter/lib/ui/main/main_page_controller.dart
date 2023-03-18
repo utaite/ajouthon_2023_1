@@ -93,4 +93,17 @@ class MainPageController extends GetController<MainPageModel> {
       ]),
     ));
   }
+
+  void onPressedReset() async {
+    change(state.copyWith(
+      courses: {},
+    ));
+
+    await Future.wait([
+      ...List.generate(8, (i) => i).map((x) async {
+        await PrefHelper.setPrefStringList(PrefType.values[x], []);
+        await PrefHelper.setPrefStringList(PrefType.values.skip(8)[x]!, []);
+      }),
+    ]);
+  }
 }

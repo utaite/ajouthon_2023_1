@@ -2,6 +2,7 @@ import 'package:ajouthon2023/constant/styles.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../../constant/colors.dart';
 import '../../constant/extension.dart';
 import 'course_list_page_controller.dart';
 
@@ -68,9 +69,10 @@ class CourseListPage extends GetView<CourseListPageController> {
                           ...state.departmentList.toList().asMap().keys.map((x) => DecoratedBox(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.black,
+                                    color: colorPrimary,
                                   ),
-                                  color: state.selectDepartments.contains(x) ? Colors.green.shade100 : context.theme.scaffoldBackgroundColor,
+                                  color:
+                                      state.selectDepartments.contains(x) ? colorPrimary.withOpacity(1 / 4) : context.theme.scaffoldBackgroundColor,
                                   borderRadius: BorderRadius.circular(6888),
                                 ),
                                 child: Material(
@@ -82,7 +84,9 @@ class CourseListPage extends GetView<CourseListPageController> {
                                       padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                       child: Text(
                                         state.departmentList[x].elvis,
-                                        style: textBlack10,
+                                        style: textBlack10.copyWith(
+                                          color: colorPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -112,9 +116,9 @@ class CourseListPage extends GetView<CourseListPageController> {
                           ...List.generate(8, (i) => i + 1).map((x) => DecoratedBox(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.black,
+                                    color: colorPrimary,
                                   ),
-                                  color: state.selectGrades.contains(x) ? Colors.green.shade100 : context.theme.scaffoldBackgroundColor,
+                                  color: state.selectGrades.contains(x) ? colorPrimary.withOpacity(1 / 4) : context.theme.scaffoldBackgroundColor,
                                   borderRadius: BorderRadius.circular(6888),
                                 ),
                                 child: Material(
@@ -126,7 +130,9 @@ class CourseListPage extends GetView<CourseListPageController> {
                                       padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                       child: Text(
                                         '${(x + 1) ~/ 2}-${(x + 1) % 2 + 1}학기',
-                                        style: textBlack10,
+                                        style: textBlack10.copyWith(
+                                          color: colorPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -154,9 +160,9 @@ class CourseListPage extends GetView<CourseListPageController> {
                           ...List.generate(3, (i) => i).map((x) => DecoratedBox(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.black,
+                                    color: colorPrimary,
                                   ),
-                                  color: state.selectTypes.contains(x) ? Colors.green.shade100 : context.theme.scaffoldBackgroundColor,
+                                  color: state.selectTypes.contains(x) ? colorPrimary.withOpacity(1 / 4) : context.theme.scaffoldBackgroundColor,
                                   borderRadius: BorderRadius.circular(6888),
                                 ),
                                 child: Material(
@@ -168,7 +174,9 @@ class CourseListPage extends GetView<CourseListPageController> {
                                       padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                       child: Text(
                                         ['전공필수', '전공선택', '교양필수'][x].elvis,
-                                        style: textBlack10,
+                                        style: textBlack10.copyWith(
+                                          color: colorPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -237,7 +245,7 @@ class CourseListPage extends GetView<CourseListPageController> {
                                         ].map((y) => DecoratedBox(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: Colors.black,
+                                                  color: colorPrimary,
                                                 ),
                                                 color: context.theme.scaffoldBackgroundColor,
                                                 borderRadius: BorderRadius.circular(6888),
@@ -246,7 +254,9 @@ class CourseListPage extends GetView<CourseListPageController> {
                                                 padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                                 child: Text(
                                                   y.elvis,
-                                                  style: textBlack10,
+                                                  style: textBlack10.copyWith(
+                                                    color: colorPrimary,
+                                                  ),
                                                 ),
                                               ),
                                             )),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../model/route/route_model.dart';
+import 'colors.dart';
 import 'getx/get_rx_impl.dart' as getx;
 import 'routes.dart';
 import 'util.dart';
@@ -203,7 +204,7 @@ extension StringOptionalEx on String? {
 
 extension ThemeDataEx on ThemeData {
   ThemeData applyTheme() {
-    const primaryColor = Colors.blueGrey;
+    const primaryColor = colorPrimary;
 
     return ThemeData(
       primarySwatch: Colors.blue,

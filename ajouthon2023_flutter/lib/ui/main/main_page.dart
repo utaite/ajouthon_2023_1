@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:ajouthon2023/constant/api.dart';
+import 'package:ajouthon2023/constant/colors.dart';
 import 'package:ajouthon2023/constant/styles.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -124,14 +125,43 @@ class MainPage extends GetView<MainPageController> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          '이수 ${state.courses.values.expand((x) => x.map((y) => y.credit)).fold<int>(0, (a, c) => a + c)}/128 학점',
-                          style: textBlack18.copyWith(
-                            fontWeight: FontWeight.bold,
+                      Row(
+                        children: [
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: Text(
+                              '이수 ${state.courses.values.expand((x) => x.map((y) => y.credit)).fold<int>(0, (a, c) => a + c)}/128 학점',
+                              style: textBlack18.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(width: 20),
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: context.theme.primaryColor,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Material(
+                              type: MaterialType.transparency,
+                              child: InkWell(
+                                onTap: controller.onPressedReset,
+                                borderRadius: BorderRadius.circular(15),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 15),
+                                  child: Text(
+                                    '학점 초기화',
+                                    style: textWhite16.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                        ],
                       ),
                       const SizedBox(height: 20),
                       Row(
@@ -140,17 +170,17 @@ class MainPage extends GetView<MainPageController> {
                           Expanded(
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                color: Colors.green.shade500,
-                                borderRadius: BorderRadius.circular(6888),
+                                color: context.theme.primaryColor,
+                                borderRadius: BorderRadius.circular(15),
                               ),
                               child: Material(
                                 type: MaterialType.transparency,
                                 child: InkWell(
                                   onTap: () =>
                                       controller.onPressedAdd((state.courses.entries.where((x) => x.value.isNullOrEmpty).firstOrNull?.key).elvis),
-                                  borderRadius: BorderRadius.circular(6888),
+                                  borderRadius: BorderRadius.circular(15),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                                    padding: const EdgeInsets.all(15),
                                     child: Text(
                                       '학기 추가',
                                       style: textWhite16.copyWith(
@@ -167,16 +197,16 @@ class MainPage extends GetView<MainPageController> {
                           Expanded(
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                color: Colors.green.shade500,
-                                borderRadius: BorderRadius.circular(6888),
+                                color: context.theme.primaryColor,
+                                borderRadius: BorderRadius.circular(15),
                               ),
                               child: Material(
                                 type: MaterialType.transparency,
                                 child: InkWell(
                                   onTap: controller.onPressedList,
-                                  borderRadius: BorderRadius.circular(6888),
+                                  borderRadius: BorderRadius.circular(15),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                                    padding: const EdgeInsets.all(15),
                                     child: Text(
                                       '과목 목록',
                                       style: textWhite16.copyWith(
@@ -217,10 +247,13 @@ class MainPage extends GetView<MainPageController> {
                                       child: Row(
                                         children: [
                                           const SizedBox(width: 10),
-                                          Icon(Icons.add_circle),
+                                          Icon(
+                                            Icons.add_circle,
+                                            color: colorPrimary,
+                                          ),
                                           const SizedBox(width: 5),
                                           Text(
-                                            '과목추가',
+                                            '과목 추가',
                                             style: textBlack18.copyWith(
                                               fontWeight: FontWeight.bold,
                                             ),
