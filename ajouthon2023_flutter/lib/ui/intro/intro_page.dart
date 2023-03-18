@@ -34,21 +34,26 @@ class IntroPage extends GetView<IntroPageController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Center(
+                      child: Text(
+                        "학적 정보를 입력해주세요",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     FractionallySizedBox(
                       widthFactor: 2 / 3,
-                      child: Center(
-                        //학년 입력 TextField
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          onChanged: controller.onChangedGrade,
-                          style: TextStyle(color: Colors.black),
-                          decoration: const InputDecoration(
-                            labelText: "학년을 입력해주세요",
-                            floatingLabelStyle: TextStyle(color: Colors.black),
-                            labelStyle: TextStyle(color: Colors.black),
-                            enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
-                          ),
+                      child: TextButton(
+                        onPressed: controller.onPressedGrade,
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          side: BorderSide(color: Colors.black),
                         ),
+                        child: Text(state.grade == -1
+                            ? "학년을 선택하세요"
+                            : '${(state.grade + 2) ~/ 2}-${(state.grade + 2) % 2 + 1}학기'),
                       ),
                     ),
                     const SizedBox(height: 25),
@@ -60,7 +65,9 @@ class IntroPage extends GetView<IntroPageController> {
                           padding: EdgeInsets.symmetric(vertical: 20),
                           side: BorderSide(color: Colors.black),
                         ),
-                        child: Text(state.department == -1 ? "학과를 선택하세요" : state.departmentList[state.department]),
+                        child: Text(state.department == -1
+                            ? "학과를 선택하세요"
+                            : state.departmentList[state.department]),
                       ),
                     ),
                     SizedBox(height: 25),
@@ -71,18 +78,22 @@ class IntroPage extends GetView<IntroPageController> {
                         keyboardType: TextInputType.number,
                         style: TextStyle(color: Colors.black),
                         decoration: const InputDecoration(
-                          labelText: "학번을 입력해주세요",
+                          labelText: "학번을 입력해주세요 (ex.202312345)",
                           floatingLabelStyle: TextStyle(color: Colors.black),
                           labelStyle: TextStyle(color: Colors.black),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.black)),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Center(
                       //과목 선택 버튼
                       child: OutlinedButton(
-                        onPressed: true
-                            // state.isFirst
+                        onPressed: state.isFirst
                             ? () => controller.onPressedIndex(1)
                             : null,
                         child: Text("다음"),
@@ -103,9 +114,25 @@ class IntroPage extends GetView<IntroPageController> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          TextButton(onPressed: () => controller.onPressedIndex(1), child: Text("네")),
-                          TextButton(onPressed: () => controller.onPressedIndex(2), child: Text("아니요")),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(30),
+                                primary: Colors.lightBlueAccent,
+                                textStyle: const TextStyle(fontSize: 15)),
+                            onPressed: () => controller.onPressedIndex(1),
+                            child: Text("네"),
+                          ),
+                          const SizedBox(width: 20,),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(30),
+                                primary: Colors.lightBlueAccent,
+                                textStyle: const TextStyle(fontSize: 15)),
+                            onPressed: () => controller.onPressedIndex(2),
+                            child: Text("아니요"),
+                          )
                         ],
                       ),
                     ],
@@ -122,10 +149,13 @@ class IntroPage extends GetView<IntroPageController> {
                         child: TextButton(
                           onPressed: controller.onPressedPluralIndex,
                           style: TextButton.styleFrom(
+                            backgroundColor: Colors.lightBlueAccent,
                             padding: EdgeInsets.symmetric(vertical: 20),
                             side: BorderSide(color: Colors.black),
                           ),
-                          child: Text(state.pluralIndex == -1 ? "전공 유형을 선택하세요" : state.majorList[state.pluralIndex]),
+                          child: Text(state.pluralIndex == -1
+                              ? "전공 유형을 선택하세요"
+                              : state.majorList[state.pluralIndex]),
                         ),
                       ),
                     ),
@@ -141,9 +171,15 @@ class IntroPage extends GetView<IntroPageController> {
                             padding: EdgeInsets.symmetric(vertical: 20),
                             side: BorderSide(color: Colors.black),
                           ),
-                          child: Text(state.pluralMajor == -1 ? "학과를 선택하세요" : state.departmentList[state.pluralMajor]),
+                          child: Text(state.pluralMajor == -1
+                              ? "학과를 선택하세요"
+                              : state.departmentList[state.pluralMajor]),
                         ),
                       ),
+                    ),
+                    SizedBox(height: 15),
+                    SizedBox(
+                      height: 20,
                     ),
                     Center(
                       //과목 선택 버튼
@@ -168,8 +204,12 @@ class IntroPage extends GetView<IntroPageController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(onPressed: () => controller.onPressedIndex(1), child: Text("네")),
-                          TextButton(onPressed: () => controller.onPressedIndex(2), child: Text("아니요")),
+                          TextButton(
+                              onPressed: () => controller.onPressedIndex(1),
+                              child: Text("네")),
+                          TextButton(
+                              onPressed: () => controller.onPressedIndex(2),
+                              child: Text("아니요")),
                         ],
                       ),
                     ],
@@ -190,9 +230,14 @@ class IntroPage extends GetView<IntroPageController> {
                           labelText: "이수 학점을 입력해주세요",
                           floatingLabelStyle: TextStyle(color: Colors.black),
                           labelStyle: TextStyle(color: Colors.black),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.black)),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Center(
                       //과목 선택 버튼
@@ -208,7 +253,7 @@ class IntroPage extends GetView<IntroPageController> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Center(
+                      const Center(
                         child: Text(
                           "이전에 현장실습을 하셨었나요?",
                           style: TextStyle(fontSize: 25),
@@ -217,8 +262,12 @@ class IntroPage extends GetView<IntroPageController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(onPressed: () => controller.onPressedIndex(1), child: Text("네")),
-                          TextButton(onPressed: () => controller.onPressedIndex(2), child: Text("아니요")),
+                          TextButton(
+                              onPressed: () => controller.onPressedIndex(1),
+                              child: Text("네")),
+                          TextButton(
+                              onPressed: () => controller.onPressedIndex(2),
+                              child: Text("아니요")),
                         ],
                       ),
                     ],
@@ -239,9 +288,14 @@ class IntroPage extends GetView<IntroPageController> {
                           labelText: "이수 학점을 입력해주세요",
                           floatingLabelStyle: TextStyle(color: Colors.black),
                           labelStyle: TextStyle(color: Colors.black),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.black)),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                     Center(
                       //과목 선택 버튼
@@ -257,7 +311,7 @@ class IntroPage extends GetView<IntroPageController> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Center(
+                      const Center(
                         child: Text(
                           "이전에 파란학기를 진행하셨었나요?",
                           style: TextStyle(fontSize: 25),
@@ -266,8 +320,12 @@ class IntroPage extends GetView<IntroPageController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(onPressed: () => controller.onPressedIndex(1), child: Text("네")),
-                          TextButton(onPressed: () => controller.onPressedIndex(2), child: Text("아니요")),
+                          TextButton(
+                              onPressed: () => controller.onPressedIndex(1),
+                              child: Text("네")),
+                          TextButton(
+                              onPressed: () => controller.onPressedIndex(2),
+                              child: Text("아니요")),
                         ],
                       ),
                     ],
@@ -288,9 +346,14 @@ class IntroPage extends GetView<IntroPageController> {
                           labelText: "이수 학점을 입력해주세요",
                           floatingLabelStyle: TextStyle(color: Colors.black),
                           labelStyle: TextStyle(color: Colors.black),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.black)),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                     Center(
                       //과목 선택 버튼
@@ -301,7 +364,48 @@ class IntroPage extends GetView<IntroPageController> {
                     ),
                   ],
                 ),
-                Center()
+                state.index < 9
+                    ? const SizedBox.shrink()
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("정보를 확인해주세요.", style: TextStyle(fontSize: 25)),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text("학적 정보", style: TextStyle(fontSize: 13)),
+                          Column(
+                            children: [
+                              Text(
+                                  '${(state.grade + 2) ~/ 2}-${(state.grade + 2) % 2 + 1}학기'),
+                              Text(state.departmentList[state.department]),
+                              Text('${state.id}'),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                "교내활동",
+                                style: TextStyle(fontSize: 17),
+                              ),
+                              Text(
+                                state.pluralIndex >= 0
+                                    ? "${state.majorList[state.pluralIndex]} ${state.departmentList[state.pluralMajor]}"
+                                    : '복수전공/부전공 -',
+                              ),
+                              Text(
+                                  "교환학생 ${state.exchangeGrade == 0 ? '-' : state.exchangeGrade}"),
+                              Text(
+                                  "현장실습 ${state.fieldPracticeGrade == 0 ? '-' : state.fieldPracticeGrade}"),
+                              Text(
+                                  "파란학기 ${state.paranGrade == 0 ? '-' : state.paranGrade}")
+                            ],
+                          )
+                        ],
+                      ),
               ],
             ),
           ),

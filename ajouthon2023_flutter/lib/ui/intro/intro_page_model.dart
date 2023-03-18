@@ -36,7 +36,7 @@ class IntroPageModel extends GetModel {
   final int index;
 
   static const IntroPageModel _empty = IntroPageModel(
-    grade: 0,
+    grade: -1,
     department: -1,
     id: 0,
     departmentList: [],
