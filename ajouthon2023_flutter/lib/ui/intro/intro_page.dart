@@ -41,7 +41,7 @@ class IntroPage extends GetView<IntroPageController> {
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 30,
                     ),
                     FractionallySizedBox(
                       widthFactor: 2 / 3,
@@ -88,7 +88,7 @@ class IntroPage extends GetView<IntroPageController> {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 25,
                     ),
                     Center(
                       //과목 선택 버튼
@@ -118,17 +118,23 @@ class IntroPage extends GetView<IntroPageController> {
                         children: [
                           TextButton(
                             style: TextButton.styleFrom(
-                                padding: const EdgeInsets.all(30),
-                                primary: Colors.lightBlueAccent,
+                                backgroundColor: Color(0xffEC586A),
+                                padding: const EdgeInsets.only(
+                                    left: 50, right: 50, top: 30, bottom: 30),
+                                primary: Colors.white,
                                 textStyle: const TextStyle(fontSize: 15)),
                             onPressed: () => controller.onPressedIndex(1),
                             child: Text("네"),
                           ),
-                          const SizedBox(width: 20,),
+                          const SizedBox(
+                            width: 20,
+                          ),
                           TextButton(
                             style: TextButton.styleFrom(
-                                padding: const EdgeInsets.only(left: 20, right: 20),
-                                primary: Colors.lightBlueAccent,
+                                backgroundColor: Color(0xffEC586A),
+                                padding: const EdgeInsets.only(
+                                    left: 40, right: 40, top: 30, bottom: 30),
+                                primary: Colors.white,
                                 textStyle: const TextStyle(fontSize: 15)),
                             onPressed: () => controller.onPressedIndex(2),
                             child: Text("아니요"),
@@ -149,7 +155,9 @@ class IntroPage extends GetView<IntroPageController> {
                         child: TextButton(
                           onPressed: controller.onPressedPluralIndex,
                           style: TextButton.styleFrom(
-                            backgroundColor: Colors.lightBlueAccent,
+                            textStyle: TextStyle(
+                              fontSize: 20,
+                            ),
                             padding: EdgeInsets.symmetric(vertical: 20),
                             side: BorderSide(color: Colors.black),
                           ),
@@ -168,6 +176,9 @@ class IntroPage extends GetView<IntroPageController> {
                         child: TextButton(
                           onPressed: controller.onPressedPluralMajor,
                           style: TextButton.styleFrom(
+                            textStyle: TextStyle(
+                              fontSize: 20,
+                            ),
                             padding: EdgeInsets.symmetric(vertical: 20),
                             side: BorderSide(color: Colors.black),
                           ),
@@ -205,9 +216,20 @@ class IntroPage extends GetView<IntroPageController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: Color(0xffEC586A),
+                                padding: const EdgeInsets.only(
+                                    left: 40, right: 40, top: 30, bottom: 30),
+                              ),
                               onPressed: () => controller.onPressedIndex(1),
                               child: Text("네")),
+                          SizedBox(width: 15,),
                           TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: Color(0xffEC586A),
+                                padding: const EdgeInsets.only(
+                                    left: 40, right: 40, top: 30, bottom: 30),
+                              ),
                               onPressed: () => controller.onPressedIndex(2),
                               child: Text("아니요")),
                         ],
@@ -263,9 +285,20 @@ class IntroPage extends GetView<IntroPageController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: Color(0xffEC586A),
+                                padding: const EdgeInsets.only(
+                                    left: 50, right: 40, top: 30, bottom: 30),
+                              ),
                               onPressed: () => controller.onPressedIndex(1),
                               child: Text("네")),
+                          SizedBox(width: 15,),
                           TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: Color(0xffEC586A),
+                                padding: const EdgeInsets.only(
+                                    left: 50, right: 40, top: 30, bottom: 30),
+                              ),
                               onPressed: () => controller.onPressedIndex(2),
                               child: Text("아니요")),
                         ],
@@ -283,7 +316,7 @@ class IntroPage extends GetView<IntroPageController> {
                       child: TextFormField(
                         onChanged: controller.onChangedFieldPracticeGrade,
                         keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                         decoration: const InputDecoration(
                           labelText: "이수 학점을 입력해주세요",
                           floatingLabelStyle: TextStyle(color: Colors.black),
@@ -321,9 +354,16 @@ class IntroPage extends GetView<IntroPageController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
+                              style: TextButton.styleFrom(backgroundColor: Color(0xffEC586A),
+                                padding: const EdgeInsets.only(
+                                    left: 50, right: 40, top: 30, bottom: 30),),
                               onPressed: () => controller.onPressedIndex(1),
                               child: Text("네")),
+                          SizedBox(width: 15,),
                           TextButton(
+                              style: TextButton.styleFrom(backgroundColor: Color(0xffEC586A),
+                                padding: const EdgeInsets.only(
+                                    left: 50, right: 40, top: 30, bottom: 30),),
                               onPressed: () => controller.onPressedIndex(2),
                               child: Text("아니요")),
                         ],
@@ -403,7 +443,9 @@ class IntroPage extends GetView<IntroPageController> {
                               Text(
                                   "파란학기 ${state.paranGrade == 0 ? '-' : state.paranGrade}"),
                               Center(
-                                  child: TextButton(onPressed: (){}, child: Text("Data send Test"))),
+                                  child: TextButton(
+                                      onPressed: () {},
+                                      child: Text("Data send Test"))),
                             ],
                           )
                         ],
