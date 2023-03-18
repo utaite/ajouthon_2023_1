@@ -15,7 +15,13 @@ class CheckPage extends GetView<CheckPageController> {
     return WillPopScope(
       onWillPop: controller.onWillPop,
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: context.theme.scaffoldBackgroundColor,
+          leading: BackButton(
+            color: Colors.black,
+          ),
+          title: Text('수강 과목 선택'),
+        ),
         backgroundColor: context.theme.scaffoldBackgroundColor,
         body: SafeArea(
           child: controller.rx((state) {
@@ -56,7 +62,7 @@ class CheckPage extends GetView<CheckPageController> {
                                               children: [
                                                 TextSpan(
                                                   text: '${(state.currentGrade + 1) ~/ 2}-${(state.currentGrade + 1) % 2 + 1}학기',
-                                                  style: text_black_22.copyWith(
+                                                  style: textBlack22.copyWith(
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
@@ -76,8 +82,8 @@ class CheckPage extends GetView<CheckPageController> {
                                 child: const SizedBox(width: 5),
                               ),
                               TextSpan(
-                                text: '수강했던 과목을 선택해주세요.',
-                                style: text_black_22.copyWith(
+                                text: '${state.grade == state.currentGrade ? '수강중인' : '수강했던'} 과목을 선택해주세요.',
+                                style: textBlack22.copyWith(
                                   fontWeight: FontWeight.bold,
                                   height: 4 / 3,
                                 ),
@@ -99,7 +105,7 @@ class CheckPage extends GetView<CheckPageController> {
                               padding: const EdgeInsets.symmetric(horizontal: 10),
                               child: Text(
                                 '학과',
-                                style: text_black_18.copyWith(
+                                style: textBlack18.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -121,7 +127,7 @@ class CheckPage extends GetView<CheckPageController> {
                                         padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                         child: Text(
                                           state.departmentList[x],
-                                          style: text_black_10,
+                                          style: textBlack10,
                                         ),
                                       ),
                                     ),
@@ -143,7 +149,7 @@ class CheckPage extends GetView<CheckPageController> {
                               padding: const EdgeInsets.symmetric(horizontal: 10),
                               child: Text(
                                 '학기',
-                                style: text_black_18.copyWith(
+                                style: textBlack18.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -165,7 +171,7 @@ class CheckPage extends GetView<CheckPageController> {
                                         padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                         child: Text(
                                           '${(x + 1) ~/ 2}-${(x + 1) % 2 + 1}학기',
-                                          style: text_black_10,
+                                          style: textBlack10,
                                         ),
                                       ),
                                     ),
@@ -185,7 +191,7 @@ class CheckPage extends GetView<CheckPageController> {
                               padding: const EdgeInsets.symmetric(horizontal: 10),
                               child: Text(
                                 '전공/교양',
-                                style: text_black_18.copyWith(
+                                style: textBlack18.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -207,7 +213,7 @@ class CheckPage extends GetView<CheckPageController> {
                                         padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                         child: Text(
                                           ['전공필수', '전공선택', '교양필수'][x].elvis,
-                                          style: text_black_10,
+                                          style: textBlack10,
                                         ),
                                       ),
                                     ),
@@ -260,7 +266,7 @@ class CheckPage extends GetView<CheckPageController> {
                                             padding: const EdgeInsets.symmetric(vertical: 10),
                                             child: Text(
                                               x.value.name,
-                                              style: text_black_16,
+                                              style: textBlack16,
                                             ),
                                           ),
                                         ),
@@ -295,7 +301,7 @@ class CheckPage extends GetView<CheckPageController> {
                                                   padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                                   child: Text(
                                                     y,
-                                                    style: text_black_10,
+                                                    style: textBlack10,
                                                   ),
                                                 ),
                                               )),
@@ -327,7 +333,7 @@ class CheckPage extends GetView<CheckPageController> {
                                 padding: const EdgeInsets.all(15),
                                 child: Text(
                                   '완료',
-                                  style: text_white_16.copyWith(
+                                  style: textWhite16.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
                                   textAlign: TextAlign.center,

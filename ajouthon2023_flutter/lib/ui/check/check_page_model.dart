@@ -1,4 +1,3 @@
-import '../../constant/extension.dart';
 import '../../constant/getx/get_model.dart';
 import '../../model/course/course_model.dart';
 

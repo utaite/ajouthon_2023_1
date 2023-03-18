@@ -62,8 +62,8 @@ class MainPage extends GetView<MainPageController> {
                                           child: Align(
                                             alignment: Alignment(-value / 3 - 2 / 3, 0),
                                             child: Text(
-                                              '정보통신대학',
-                                              style: text_black_22.copyWith(
+                                              '소프트웨어융합대학',
+                                              style: textBlack18.copyWith(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -78,14 +78,14 @@ class MainPage extends GetView<MainPageController> {
                                               children: [
                                                 Text(
                                                   '소프트웨어학과',
-                                                  style: text_black_22.copyWith(
+                                                  style: textBlack18.copyWith(
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                                 ...[
-                                                  Text('제1복수전공 미디어학과', style: text_black_16),
+                                                  Text('제1복수전공 미디어학과', style: textBlack16),
                                                   const SizedBox(height: 10),
-                                                  Text('202021766', style: text_black_16),
+                                                  Text('202021766', style: textBlack16),
                                                 ].map((x) => Visibility(
                                                       visible: opacity > 0,
                                                       child: Opacity(
@@ -124,20 +124,38 @@ class MainPage extends GetView<MainPageController> {
                           const SizedBox(width: 20),
                           Expanded(
                             child: Text(
-                              '이수 100/128 학점',
-                              style: text_black_18.copyWith(
+                              '이수 ${state.courses.values.expand((x) => x.map((y) => y.credit)).fold<int>(0, (a, c) => a + c)}/128 학점',
+                              style: textBlack18.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          IconButton(
-                            onPressed: controller.onPressedList,
-                            icon: Icon(Icons.list),
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: Colors.green.shade500,
+                              borderRadius: BorderRadius.circular(6888),
+                            ),
+                            child: Material(
+                              type: MaterialType.transparency,
+                              child: InkWell(
+                                onTap: controller.onPressedList,
+                                borderRadius: BorderRadius.circular(6888),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 15),
+                                  child: Text(
+                                    '과목 목록',
+                                    style: textWhite16.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           const SizedBox(width: 10),
                         ],
                       ),
-                      ...state.courses.entries.expand((x) => [
+                      ...state.courses.entries.where((x) => x.value.isset).toList().reversed.expand((x) => [
                             const SizedBox(height: 20),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,8 +163,8 @@ class MainPage extends GetView<MainPageController> {
                                 const SizedBox(width: 20),
                                 Expanded(
                                   child: Text(
-                                    '${x.key}',
-                                    style: text_black_18.copyWith(
+                                    '${(x.key + 2) ~/ 2}-${(x.key + 2) % 2 + 1}학기 수강과목',
+                                    style: textBlack18.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -165,7 +183,7 @@ class MainPage extends GetView<MainPageController> {
                                           const SizedBox(width: 5),
                                           Text(
                                             '과목추가',
-                                            style: text_black_18.copyWith(
+                                            style: textBlack18.copyWith(
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -211,7 +229,7 @@ class MainPage extends GetView<MainPageController> {
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                   '${x.value.map((y) => y.credit).fold<int>(0, (a, c) => a + c)}학점',
-                                  style: text_black_16.copyWith(
+                                  style: textBlack16.copyWith(
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),

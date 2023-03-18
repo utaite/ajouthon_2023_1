@@ -47,11 +47,14 @@ class CheckPageController extends GetController<CheckPageModel> {
     final courses = response.body;
 
     if (courses is Iterable<CourseModel>) {
+      final isBefore = (courses.firstOrNull?.department).elvis > (state.courses.firstOrNull?.department).elvis;
+
       change(
         state.copyWith(
           courses: [
+            ...isBefore ? state.courses : [],
             ...courses,
-            ...state.courses,
+            ...isBefore ? [] : state.courses,
           ],
         ),
         status: RxStatus.success(),
@@ -77,7 +80,7 @@ class CheckPageController extends GetController<CheckPageModel> {
   }
 
   void onPressedGrade() async {
-    final grade = await showModalBottomSheet<int>(
+    await showModalBottomSheet<int>(
       context: Get.context!,
       builder: (context) => Container(
         height: 200,
@@ -95,8 +98,6 @@ class CheckPageController extends GetController<CheckPageModel> {
         ),
       ),
     );
-
-    if (grade is int) {}
   }
 
   void onPressedCheckedCourse(String name) {
@@ -159,8 +160,8 @@ class CheckPageController extends GetController<CheckPageModel> {
     await Future.wait([
       ...state.checkedCourses.entries.map((x) async {
         await PrefHelper.setPrefStringList(PrefType.values[x.key], x.value);
-        await PrefHelper.setPrefInt(
-            PrefType.values.skip(8)[x.key]!, state.courses.where((y) => x.value.contains(y.name)).map((z) => z.credit).fold(0, (a, c) => a + c));
+        await PrefHelper.setPrefStringList(
+            PrefType.values.skip(8)[x.key]!, state.courses.where((y) => x.value.contains(y.name)).map((z) => '${z.credit}'));
       }),
     ]);
 

@@ -59,7 +59,7 @@ class CourseModel extends GetModel {
           grade: json['grade'],
           summary: json['summary'],
           prerequisite: [
-            ...Iterable.castFrom(json['prerequisite'] ?? const []).whereType<Map<String, dynamic>>().map((x) => x.toString()),
+            ...Iterable.castFrom(json['prerequisite'] ?? const []),
           ],
         )
       : _empty;

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../model/course/course_model.dart';
 
 const String url = 'https://ajouthon2023.jollyrock-baa25231.koreacentral.azurecontainerapps.io';
+const List<String> departmentList = ['소프트웨어학과', '융합시스템공학과', '불어불문학과'];
 
 class Api extends GetConnect {
   @override

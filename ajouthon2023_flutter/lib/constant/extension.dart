@@ -1,3 +1,4 @@
+import 'package:ajouthon2023/constant/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -206,10 +207,13 @@ extension ThemeDataEx on ThemeData {
 
     return ThemeData(
       primarySwatch: Colors.blue,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         centerTitle: true,
         toolbarHeight: 54,
         elevation: 1,
+        titleTextStyle: textBlack18.copyWith(
+          fontWeight: FontWeight.w500,
+        ),
       ),
       colorScheme: (brightness.isDark ? const ColorScheme.dark() : const ColorScheme.light()).copyWith(
         primary: primaryColor,
