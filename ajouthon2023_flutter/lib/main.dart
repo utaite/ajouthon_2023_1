@@ -10,7 +10,7 @@ void main() async {
 
   Get.put<AppController>(AppController(
     model: AppModel.empty().copyWith(
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
     ),
   ));
   runApp(const App());

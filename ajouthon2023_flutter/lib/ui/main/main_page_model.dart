@@ -1,14 +1,15 @@
 import '../../constant/getx/get_model.dart';
+import '../../model/course/course_model.dart';
 
 class MainPageModel extends GetModel {
   const MainPageModel({
-    required this.index,
+    required this.courses,
   });
 
-  final int index;
+  final Map<String, List<CourseModel>> courses;
 
   static const MainPageModel _empty = MainPageModel(
-    index: 0,
+    courses: {},
   );
 
   factory MainPageModel.empty() => _empty;
@@ -18,16 +19,16 @@ class MainPageModel extends GetModel {
 
   @override
   MainPageModel copyWith({
-    int? index,
+    Map<String, List<CourseModel>>? courses,
   }) {
     return MainPageModel(
-      index: index ?? this.index,
+      courses: courses ?? this.courses,
     );
   }
 
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [courses];
 
   @override
-  String toString() => 'index: $index';
+  String toString() => 'courses: $courses';
 }

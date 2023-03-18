@@ -83,5 +83,6 @@ class CourseModel extends GetModel {
   List<Object?> get props => [uuid, department, name, credit, time, grade, summary, prerequisite];
 
   @override
-  String toString() => 'uuid: $uuid department: $department type: $type name: $name credit: $credit time: $time grade: $grade summary: $summary prerequisite: $prerequisite';
+  String toString() =>
+      'uuid: $uuid department: $department type: $type name: $name credit: $credit time: $time grade: $grade summary: $summary prerequisite: $prerequisite';
 }

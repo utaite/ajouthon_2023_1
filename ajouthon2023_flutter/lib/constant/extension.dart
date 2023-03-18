@@ -301,7 +301,7 @@ extension WidgetEx on Widget {
   }) {
     return Wrap(
       alignment: WrapAlignment.center,
-      runAlignment: WrapAlignment.center,
+      runAlignment: WrapAlignment.start,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         ConstrainedBox(
