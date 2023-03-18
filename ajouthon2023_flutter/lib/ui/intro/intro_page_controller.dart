@@ -26,9 +26,9 @@ class IntroPageController extends GetController<IntroPageModel> {
     print(state);
   }
 
-  void onChangedGrade(String value) {
+  void onChangedGrade(int value) {
     change(state.copyWith(
-      grade: int.tryParse(value),
+      grade: value,
     ));
     print(state);
   }
@@ -113,6 +113,27 @@ class IntroPageController extends GetController<IntroPageModel> {
     print(state);
   }
 
+  void onPressedGrade() async {
+    await showModalBottomSheet<int>(
+      context: Get.context!,
+      builder: (context) => Container(
+        height: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: CupertinoPicker(
+          scrollController: FixedExtentScrollController(initialItem: state.grade),
+          onSelectedItemChanged: onChangedGrade,
+          itemExtent: 30,
+          backgroundColor: CupertinoColors.white,
+          children: [
+            ...List.generate(8, (i) => Text('${(i + 2) ~/ 2}-${(i + 2) % 2 + 1}학기')),
+          ],
+        ),
+      ),
+    );
+  }
+
   void onPressedDepartment() async {
     final index = await showModalBottomSheet<int>(
       context: Get.context!,
@@ -122,6 +143,7 @@ class IntroPageController extends GetController<IntroPageModel> {
           borderRadius: BorderRadius.circular(12),
         ),
         child: CupertinoPicker(
+          scrollController: FixedExtentScrollController(initialItem: state.department),
           itemExtent: 50.0,
           backgroundColor: CupertinoColors.white,
           onSelectedItemChanged: onChangedDepartment,
