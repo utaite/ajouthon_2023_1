@@ -1,14 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../../constant/extension.dart';
 import '../../constant/getx/get_model.dart';
-import '../../constant/routes.dart';
-import '../../constant/util.dart';
 
 class CourseModel extends GetModel {
   const CourseModel({
     required this.uuid,
+    required this.department,
     required this.type,
     required this.name,
     required this.credit,
@@ -19,6 +14,7 @@ class CourseModel extends GetModel {
   });
 
   final String uuid;
+  final int department;
   final int type;
   final String name;
   final int credit;
@@ -29,6 +25,7 @@ class CourseModel extends GetModel {
 
   static const CourseModel _empty = CourseModel(
     uuid: '',
+    department: 0,
     type: 0,
     name: '',
     credit: 0,
@@ -46,6 +43,7 @@ class CourseModel extends GetModel {
   factory CourseModel.fromJson(dynamic json) => json is Map<String, dynamic>
       ? _empty.copyWith(
           uuid: json['uuid'],
+          department: json['department'],
           type: json['type'],
           name: json['name'],
           credit: json['credit'],
@@ -59,6 +57,7 @@ class CourseModel extends GetModel {
   @override
   CourseModel copyWith({
     String? uuid,
+    int? department,
     int? type,
     String? name,
     int? credit,
@@ -69,6 +68,7 @@ class CourseModel extends GetModel {
   }) {
     return CourseModel(
       uuid: uuid ?? this.uuid,
+      department: department ?? this.department,
       type: type ?? this.type,
       name: name ?? this.name,
       credit: credit ?? this.credit,
@@ -80,8 +80,9 @@ class CourseModel extends GetModel {
   }
 
   @override
-  List<Object?> get props => [uuid, type, name, credit, time, grade, summary, prerequisite];
+  List<Object?> get props => [uuid, department, name, credit, time, grade, summary, prerequisite];
 
   @override
-  String toString() => 'uuid: $uuid type: $type name: $name credit: $credit time: $time grade: $grade summary: $summary prerequisite: $prerequisite';
+  String toString() =>
+      'uuid: $uuid department: $department type: $type name: $name credit: $credit time: $time grade: $grade summary: $summary prerequisite: $prerequisite';
 }

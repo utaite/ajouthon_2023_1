@@ -30,6 +30,10 @@ class RouteModel extends GetModel {
     navigatorId: randomInt,
     routes: Routes.main,
   );
+  static final RouteModel _intro = _empty.copyWith(
+    navigatorId: randomInt,
+    routes: Routes.intro,
+  );
 
   static final RouteModel _courseAdd = _empty.copyWith(
     navigatorId: randomInt,
@@ -48,6 +52,8 @@ class RouteModel extends GetModel {
   factory RouteModel.courseAdd() => _courseAdd;
 
   factory RouteModel.courseList() => _courseList;
+
+  factory RouteModel.intro() => _intro;
 
   @override
   bool get isEmpty => this == _empty;
