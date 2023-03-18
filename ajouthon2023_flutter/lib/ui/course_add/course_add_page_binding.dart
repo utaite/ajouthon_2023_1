@@ -15,6 +15,7 @@ class CourseAddPageBinding extends Bindings {
 
         return CourseAddPageModel.empty().copyWith(
           grade: argument(),
+          departments: arguments(),
           checkedCourses: Map.fromEntries([
             ...List.generate(8, (i) => i).map((x) => MapEntry(x, courses?[x]?.map((y) => y.name) ?? [])),
           ]),

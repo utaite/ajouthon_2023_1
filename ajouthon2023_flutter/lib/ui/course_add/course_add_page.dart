@@ -1,4 +1,5 @@
 import 'package:ajouthon2023/constant/styles.dart';
+import 'package:ajouthon2023/model/course/course_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -33,10 +34,37 @@ class CourseAddPage extends GetView<CourseAddPageController> {
         ),
         backgroundColor: context.theme.scaffoldBackgroundColor,
         body: controller.rx((state) {
-          final filters = state.courses.where((x) =>
-              (state.selectDepartments.isNullOrEmpty || state.selectDepartments.contains(x.department)) &&
-              (state.selectGrades.isNullOrEmpty || state.selectGrades.contains(x.grade)) &&
-              (state.selectTypes.isNullOrEmpty || state.selectTypes.contains(x.type)));
+          int isRecommend(CourseModel course) =>
+              state.departments.contains(course.department) && [0, 2].contains(course.type) && state.grade == course.grade - 1 ? 1 : -1;
+          int isReject(CourseModel course) => course.prerequisite.isset &&
+                  course.prerequisite.every(
+                      (x) => !state.checkedCourses.values.expand((y) => y).map((y) => state.courses.where((z) => z.name == y).firstOrNull?.uuid).contains(x))
+              ? 1
+              : -1;
+
+          final filters = state.courses
+              .where((x) =>
+                  (state.selectDepartments.isNullOrEmpty || state.selectDepartments.contains(x.department)) &&
+                  (state.selectGrades.isNullOrEmpty || state.selectGrades.contains(x.grade)) &&
+                  (state.selectTypes.isNullOrEmpty || state.selectTypes.contains(x.type)))
+              .toList()
+            ..sort((a, b) {
+              if (isRecommend(b) != isRecommend(a)) {
+                return isRecommend(b).compareTo(isRecommend(a));
+              } else if (isReject(a) != isReject(b)) {
+                return isReject(a).compareTo(isReject(b));
+              } else if ((state.grade - a.grade).abs() != (state.grade - b.grade).abs()) {
+                return (state.grade - a.grade + 1).abs().compareTo((state.grade - b.grade + 1).abs());
+              } else if (a.type % 2 != b.type % 2) {
+                return (a.type % 2).compareTo(b.type % 2);
+              }
+
+              return a.name.compareTo(b.name);
+            });
+          final totalCredit = state.checkedCourses[state.grade].elvis
+              .map((x) => state.courses.where((y) => y.name == x).firstOrNull)
+              .map((x) => (x?.credit).elvis)
+              .fold<int>(0, (a, c) => a + c);
 
           return CustomScrollView(
             slivers: [
@@ -96,6 +124,14 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                 height: 4 / 3,
                               ),
                             ),
+                            if (totalCredit > 0)
+                              TextSpan(
+                                text: '($totalCredit학점)',
+                                style: textBlack22.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  height: 4 / 3,
+                                ),
+                              ),
                           ],
                         ),
                       ),
@@ -118,7 +154,7 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                               ),
                             ),
                           ),
-                          ...state.departmentList.asMap().keys.map((x) => DecoratedBox(
+                          ...state.departmentList.toList().asMap().keys.map((x) => DecoratedBox(
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.black,
@@ -134,7 +170,7 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                       child: Text(
-                                        state.departmentList[x],
+                                        state.departmentList[x].elvis,
                                         style: textBlack10,
                                       ),
                                     ),
@@ -278,13 +314,44 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                           ),
                                         ),
                                       ),
-                                      Visibility(
-                                        visible: isActive,
-                                        child: Icon(
-                                          Icons.check,
-                                          color: Colors.green,
-                                        ),
-                                      ),
+                                      isActive
+                                          ? Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            )
+                                          : isRecommend(x.value) == 1
+                                              ? DecoratedBox(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.green,
+                                                    borderRadius: BorderRadius.circular(6888),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                                                    child: Text(
+                                                      '추천',
+                                                      style: textWhite10.copyWith(
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              : isReject(x.value) == 1
+                                                  ? DecoratedBox(
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.red,
+                                                        borderRadius: BorderRadius.circular(6888),
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                                                        child: Text(
+                                                          '비추천',
+                                                          style: textWhite10.copyWith(
+                                                            fontWeight: FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : const SizedBox.shrink(),
                                       const SizedBox(width: 10),
                                     ],
                                   ),
@@ -308,7 +375,7 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                               child: Padding(
                                                 padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                                 child: Text(
-                                                  y,
+                                                  y.elvis,
                                                   style: textBlack10,
                                                 ),
                                               ),

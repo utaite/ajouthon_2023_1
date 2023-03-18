@@ -20,8 +20,16 @@ class MainPageController extends GetController<MainPageModel> {
     final credits = await Future.wait([
       ...PrefType.values.skip(8).take(8).map((x) async => await PrefHelper.getPrefStringList(x)),
     ]);
+    final id = 202220635; // await PrefHelper.getPrefInt(PrefType.id);
+    final department = 1; // await PrefHelper.getPrefInt(PrefType.department);
+    final pluralMajor = 1; // await PrefHelper.getPrefInt(PrefType.pluralMajor);
+    final pluralIndex = 0; // await PrefHelper.getPrefInt(PrefType.pluralIndex);
 
     change(state.copyWith(
+      id: id,
+      department: department,
+      pluralMajor: pluralMajor,
+      pluralIndex: pluralIndex,
       courses: Map.fromEntries([
         ...courses.asMap().entries.map((x) => MapEntry(x.key, [
               ...x.value.asMap().entries.map((y) => CourseModel.empty().copyWith(
@@ -62,6 +70,7 @@ class MainPageController extends GetController<MainPageModel> {
     await RouteModel.courseAdd().toNamed(
       arguments: [
         key,
+        [state.department, state.pluralIndex].where((x) => x >= 0).toList(),
         state.courses,
       ],
     );

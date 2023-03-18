@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ajouthon2023/constant/api.dart';
 import 'package:ajouthon2023/constant/styles.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class MainPage extends GetView<MainPageController> {
                                           child: Align(
                                             alignment: Alignment(-value / 3 - 2 / 3, 0),
                                             child: Text(
-                                              '소프트웨어융합대학',
+                                              collegeList[state.department].elvis,
                                               style: textBlack18.copyWith(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -77,15 +78,19 @@ class MainPage extends GetView<MainPageController> {
                                               crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  '소프트웨어학과',
+                                                  departmentList[state.department].elvis,
                                                   style: textBlack18.copyWith(
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                                 ...[
-                                                  Text('제1복수전공 미디어학과', style: textBlack14),
+                                                  if (state.pluralMajor >= 0 && state.pluralIndex >= 0)
+                                                    Text(
+                                                      '제1${majorList[state.pluralMajor]} ${departmentList[state.pluralIndex]}',
+                                                      style: textBlack14,
+                                                    ),
                                                   const SizedBox(height: 10),
-                                                  Text('202021766', style: textBlack14),
+                                                  Text('${state.id}', style: textBlack14),
                                                 ].map((x) => Visibility(
                                                       visible: opacity > 0,
                                                       child: Opacity(

@@ -68,7 +68,7 @@ class CourseAddPageController extends GetController<CourseAddPageModel> {
   void onCourseAddPageLoadEvent() {
     change(state, status: RxStatus.loading());
     _eventSubject.add(CourseAddPageLoadEvent(
-      departments: state.departmentList.asMap().keys,
+      departments: state.departmentList.toList().asMap().keys,
     ));
   }
 

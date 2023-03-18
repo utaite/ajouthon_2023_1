@@ -4,6 +4,7 @@ import '../../model/course/course_model.dart';
 class CourseAddPageModel extends GetModel {
   const CourseAddPageModel({
     required this.grade,
+    required this.departments,
     required this.departmentList,
     required this.courses,
     required this.checkedCourses,
@@ -13,7 +14,8 @@ class CourseAddPageModel extends GetModel {
   });
 
   final int grade;
-  final List<String> departmentList;
+  final Iterable<int> departments;
+  final Iterable<String> departmentList;
   final Iterable<CourseModel> courses;
   final Map<int, Iterable<String>> checkedCourses;
   final Iterable<int> selectDepartments;
@@ -22,6 +24,7 @@ class CourseAddPageModel extends GetModel {
 
   static const CourseAddPageModel _empty = CourseAddPageModel(
     grade: -1,
+    departments: [],
     departmentList: [],
     courses: [],
     checkedCourses: {},
@@ -38,7 +41,8 @@ class CourseAddPageModel extends GetModel {
   @override
   CourseAddPageModel copyWith({
     int? grade,
-    List<String>? departmentList,
+    Iterable<int>? departments,
+    Iterable<String>? departmentList,
     Iterable<CourseModel>? courses,
     Map<int, Iterable<String>>? checkedCourses,
     Iterable<int>? selectDepartments,
@@ -47,6 +51,7 @@ class CourseAddPageModel extends GetModel {
   }) {
     return CourseAddPageModel(
       grade: grade ?? this.grade,
+      departments: departments ?? this.departments,
       departmentList: departmentList ?? this.departmentList,
       courses: courses ?? this.courses,
       checkedCourses: checkedCourses ?? this.checkedCourses,
@@ -57,9 +62,9 @@ class CourseAddPageModel extends GetModel {
   }
 
   @override
-  List<Object?> get props => [grade, departmentList, courses, checkedCourses, selectDepartments, selectGrades, selectTypes];
+  List<Object?> get props => [grade, departments, departmentList, courses, checkedCourses, selectDepartments, selectGrades, selectTypes];
 
   @override
   String toString() =>
-      'grade: $grade departmentList: $departmentList courses: $courses checkedCourses: $checkedCourses selectDepartments: $selectDepartments selectGrades: $selectGrades selectTypes: $selectTypes';
+      'grade: $grade departments: $departments departmentList: $departmentList courses: $courses checkedCourses: $checkedCourses selectDepartments: $selectDepartments selectGrades: $selectGrades selectTypes: $selectTypes';
 }

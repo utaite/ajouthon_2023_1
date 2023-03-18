@@ -126,7 +126,7 @@ class CheckPage extends GetView<CheckPageController> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                         child: Text(
-                                          state.departmentList[x],
+                                          state.departmentList[x].elvis,
                                           style: textBlack10,
                                         ),
                                       ),
@@ -300,7 +300,7 @@ class CheckPage extends GetView<CheckPageController> {
                                                 child: Padding(
                                                   padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                                   child: Text(
-                                                    y,
+                                                    y.elvis,
                                                     style: textBlack10,
                                                   ),
                                                 ),

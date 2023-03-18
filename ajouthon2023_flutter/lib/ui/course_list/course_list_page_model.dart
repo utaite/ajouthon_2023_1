@@ -10,7 +10,7 @@ class CourseListPageModel extends GetModel {
     required this.selectTypes,
   });
 
-  final List<String> departmentList;
+  final Iterable<String> departmentList;
   final Iterable<CourseModel> courses;
   final Iterable<int> selectDepartments;
   final Iterable<int> selectGrades;
@@ -31,7 +31,7 @@ class CourseListPageModel extends GetModel {
 
   @override
   CourseListPageModel copyWith({
-    List<String>? departmentList,
+    Iterable<String>? departmentList,
     Iterable<CourseModel>? courses,
     Iterable<int>? selectDepartments,
     Iterable<int>? selectGrades,
