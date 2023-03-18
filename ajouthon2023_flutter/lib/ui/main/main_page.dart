@@ -62,7 +62,7 @@ class MainPage extends GetView<MainPageController> {
                                           child: Align(
                                             alignment: Alignment(-value / 3 - 2 / 3, 0),
                                             child: Text(
-                                              '정보통신대학',
+                                              '소프트웨어융합대학',
                                               style: text_black_22.copyWith(
                                                 fontWeight: FontWeight.bold,
                                               ),
