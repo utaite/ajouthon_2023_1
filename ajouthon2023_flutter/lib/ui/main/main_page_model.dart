@@ -6,7 +6,7 @@ class MainPageModel extends GetModel {
     required this.courses,
   });
 
-  final Map<String, List<CourseModel>> courses;
+  final Map<int, List<CourseModel>> courses;
 
   static const MainPageModel _empty = MainPageModel(
     courses: {},
@@ -19,7 +19,7 @@ class MainPageModel extends GetModel {
 
   @override
   MainPageModel copyWith({
-    Map<String, List<CourseModel>>? courses,
+    Map<int, List<CourseModel>>? courses,
   }) {
     return MainPageModel(
       courses: courses ?? this.courses,

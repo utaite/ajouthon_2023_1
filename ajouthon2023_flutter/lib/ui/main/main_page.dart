@@ -19,10 +19,10 @@ class MainPage extends GetView<MainPageController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: controller.onWillPop,
-      child: controller.rx((state) {
-        return Scaffold(
-          body: SafeArea(
-            child: CustomScrollView(
+      child: Scaffold(
+        body: SafeArea(child: controller.rx(
+          (state) {
+            return CustomScrollView(
               slivers: [
                 SliverAppBar(
                   backgroundColor: context.theme.scaffoldBackgroundColor,
@@ -145,7 +145,7 @@ class MainPage extends GetView<MainPageController> {
                                 const SizedBox(width: 20),
                                 Expanded(
                                   child: Text(
-                                    x.key,
+                                    '${x.key}',
                                     style: text_black_18.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -223,10 +223,10 @@ class MainPage extends GetView<MainPageController> {
                   ),
                 ),
               ],
-            ),
-          ),
-        );
-      }),
+            );
+          },
+        )),
+      ),
     );
   }
 }

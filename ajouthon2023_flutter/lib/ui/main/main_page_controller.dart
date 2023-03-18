@@ -13,7 +13,7 @@ class MainPageController extends GetController<MainPageModel> {
     await RouteModel.courseList().toNamed();
   }
 
-  void onPressedAdd(String key) async {
+  void onPressedAdd(int key) async {
     await RouteModel.courseAdd().toNamed();
   }
 }

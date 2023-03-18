@@ -16,17 +16,17 @@ class CourseListPage extends GetView<CourseListPageController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: controller.onWillPop,
-      child: controller.rx((state) {
-        return Scaffold(
-          appBar: AppBar(),
-          backgroundColor: context.theme.scaffoldBackgroundColor,
-          body: SafeArea(
+      child: Scaffold(
+        appBar: AppBar(),
+        backgroundColor: context.theme.scaffoldBackgroundColor,
+        body: controller.rx((state) {
+          return SafeArea(
             child: Center(
               child: Text('Hello, CourseList!'),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }
