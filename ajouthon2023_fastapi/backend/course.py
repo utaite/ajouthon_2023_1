@@ -6,7 +6,7 @@ from tortoise import fields, models, Tortoise
 class Courses(models.Model):
     id = fields.IntField(pk=True)
     uuid = fields.CharField(max_length=10)  # 과목 코드. (ex: SCE102)
-    department = fields.IntField()  # 학과 구분. 0: 소프트웨어학과
+    department = fields.IntField()  # 학과 구분. 0: 소프트웨어학과, 1: 융합시스템공학과, 2: 불어불문학과
     type = fields.IntField()  # 과목 종류. 0: 교양 필수, 1: 전공 필수, 2: 전공 선택
     name = fields.CharField(max_length=50)  # 과목 이름.
     credit = fields.IntField()  # 학점.

@@ -12,18 +12,13 @@ async def startup():
 
 @app.get("/courses/{num}")
 async def course(num: int):
-    courses = []
-
-    if num == 0:  # 소프트웨어학과
-        courses = await Courses.all()
-
+    courses = await Courses.filter(department=num)
     return courses
 
 
 @app.get("/course/find/{uuid}")
 async def course_find(uuid: str):
     course = await Courses.filter(uuid=uuid)
-
     return course
 
 
