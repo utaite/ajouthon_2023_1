@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../ui/check/check_page.dart';
+import '../ui/check/check_page_binding.dart';
 import '../ui/course_add/course_add_page.dart';
 import '../ui/course_add/course_add_page_binding.dart';
 import '../ui/course_list/course_list_page.dart';
@@ -16,6 +18,7 @@ enum Routes {
   courseList,
   courseAdd,
   intro,
+  check,
 }
 
 final Map<Routes, MapEntry<WidgetFunc, Bindings?>> pages = {
@@ -23,4 +26,5 @@ final Map<Routes, MapEntry<WidgetFunc, Bindings?>> pages = {
   Routes.courseList: MapEntry(() => const CourseListPage(), CourseListPageBinding()),
   Routes.courseAdd: MapEntry(() => const CourseAddPage(), CourseAddPageBinding()),
   Routes.intro: MapEntry(() => const IntroPage(), IntroPageBinding()),
+  Routes.check: MapEntry(() => const CheckPage(), CheckPageBinding()),
 };
