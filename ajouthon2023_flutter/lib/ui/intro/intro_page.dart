@@ -404,7 +404,6 @@ class IntroPage extends GetView<IntroPageController> {
                                   "파란학기 ${state.paranGrade == 0 ? '-' : state.paranGrade}"),
                               Center(
                                   child: TextButton(onPressed: (){}, child: Text("Data send Test"))),
-
                             ],
                           )
                         ],
