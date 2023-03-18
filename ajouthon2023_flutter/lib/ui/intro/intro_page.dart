@@ -127,7 +127,7 @@ class IntroPage extends GetView<IntroPageController> {
                           const SizedBox(width: 20,),
                           TextButton(
                             style: TextButton.styleFrom(
-                                padding: const EdgeInsets.all(30),
+                                padding: const EdgeInsets.only(left: 20, right: 20),
                                 primary: Colors.lightBlueAccent,
                                 textStyle: const TextStyle(fontSize: 15)),
                             onPressed: () => controller.onPressedIndex(2),
@@ -401,7 +401,9 @@ class IntroPage extends GetView<IntroPageController> {
                               Text(
                                   "현장실습 ${state.fieldPracticeGrade == 0 ? '-' : state.fieldPracticeGrade}"),
                               Text(
-                                  "파란학기 ${state.paranGrade == 0 ? '-' : state.paranGrade}")
+                                  "파란학기 ${state.paranGrade == 0 ? '-' : state.paranGrade}"),
+                              Center(
+                                  child: TextButton(onPressed: (){}, child: Text("Data send Test"))),
                             ],
                           )
                         ],
