@@ -52,7 +52,7 @@ class IntroPage extends GetView<IntroPageController> {
                           side: BorderSide(color: Colors.black),
                         ),
                         child: Text(state.grade == -1
-                            ? "학과를 선택하세요"
+                            ? "학년을 선택하세요"
                             : '${(state.grade + 2) ~/ 2}-${(state.grade + 2) % 2 + 1}학기'),
                       ),
                     ),
@@ -114,13 +114,25 @@ class IntroPage extends GetView<IntroPageController> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           TextButton(
-                              onPressed: () => controller.onPressedIndex(1),
-                              child: Text("네")),
+                            style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(30),
+                                primary: Colors.lightBlueAccent,
+                                textStyle: const TextStyle(fontSize: 15)),
+                            onPressed: () => controller.onPressedIndex(1),
+                            child: Text("네"),
+                          ),
+                          const SizedBox(width: 20,),
                           TextButton(
-                              onPressed: () => controller.onPressedIndex(2),
-                              child: Text("아니요")),
+                            style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(30),
+                                primary: Colors.lightBlueAccent,
+                                textStyle: const TextStyle(fontSize: 15)),
+                            onPressed: () => controller.onPressedIndex(2),
+                            child: Text("아니요"),
+                          )
                         ],
                       ),
                     ],
@@ -137,6 +149,7 @@ class IntroPage extends GetView<IntroPageController> {
                         child: TextButton(
                           onPressed: controller.onPressedPluralIndex,
                           style: TextButton.styleFrom(
+                            backgroundColor: Colors.lightBlueAccent,
                             padding: EdgeInsets.symmetric(vertical: 20),
                             side: BorderSide(color: Colors.black),
                           ),
@@ -163,6 +176,10 @@ class IntroPage extends GetView<IntroPageController> {
                               : state.departmentList[state.pluralMajor]),
                         ),
                       ),
+                    ),
+                    SizedBox(height: 15),
+                    SizedBox(
+                      height: 20,
                     ),
                     Center(
                       //과목 선택 버튼
@@ -219,6 +236,9 @@ class IntroPage extends GetView<IntroPageController> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Center(
                       //과목 선택 버튼
                       child: OutlinedButton(
@@ -273,6 +293,9 @@ class IntroPage extends GetView<IntroPageController> {
                                   BorderSide(width: 1, color: Colors.black)),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                     Center(
                       //과목 선택 버튼
@@ -329,6 +352,9 @@ class IntroPage extends GetView<IntroPageController> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 30,
+                    ),
                     Center(
                       //과목 선택 버튼
                       child: OutlinedButton(
@@ -370,9 +396,12 @@ class IntroPage extends GetView<IntroPageController> {
                                     ? "${state.majorList[state.pluralIndex]} ${state.departmentList[state.pluralMajor]}"
                                     : '복수전공/부전공 -',
                               ),
-                              Text("교환학생 ${state.exchangeGrade == 0 ? '-':state.exchangeGrade}"),
-                              Text("현장실습 ${state.fieldPracticeGrade == 0 ? '-':state.fieldPracticeGrade}"),
-                              Text("파란학기 ${state.paranGrade == 0 ? '-':state.paranGrade}")
+                              Text(
+                                  "교환학생 ${state.exchangeGrade == 0 ? '-' : state.exchangeGrade}"),
+                              Text(
+                                  "현장실습 ${state.fieldPracticeGrade == 0 ? '-' : state.fieldPracticeGrade}"),
+                              Text(
+                                  "파란학기 ${state.paranGrade == 0 ? '-' : state.paranGrade}")
                             ],
                           )
                         ],
