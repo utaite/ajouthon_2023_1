@@ -17,6 +17,10 @@ enum PrefType {
   scores6,
   scores7,
   scores8,
+  id,
+  department,
+  pluralMajor,
+  pluralIndex,
 }
 
 class PrefHelper {
@@ -45,7 +49,7 @@ class PrefHelper {
   }
 
   static Future<int> getPrefInt(PrefType type) async {
-    return (await _pref).getInt(type.name) ?? 0;
+    return (await _pref).getInt(type.name) ?? -1;
   }
 
   static Future<bool> setPrefInt(PrefType type, int value) async {

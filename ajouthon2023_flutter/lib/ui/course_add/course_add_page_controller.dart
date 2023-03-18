@@ -1,11 +1,12 @@
 import 'package:ajouthon2023/constant/extension.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart' as rx;
 
 import '../../constant/api.dart';
 import '../../constant/getx/get_controller.dart';
-import '../../constant/styles.dart';
+import '../../constant/pref_helper.dart';
 import '../../model/course/course_model.dart';
 import 'course_add_page_model.dart';
 import 'event/course_add_page_event.dart';
@@ -51,7 +52,7 @@ class CourseAddPageController extends GetController<CourseAddPageModel> {
         state.copyWith(
           courses: [
             ...isBefore ? state.courses : [],
-            ...courses.where((x) => !state.already.map((x) => x.name).contains(x.name)),
+            ...courses,
             ...isBefore ? [] : state.courses,
           ],
         ),
@@ -67,49 +68,52 @@ class CourseAddPageController extends GetController<CourseAddPageModel> {
   void onCourseAddPageLoadEvent() {
     change(state, status: RxStatus.loading());
     _eventSubject.add(CourseAddPageLoadEvent(
-      departments: state.departmentList.asMap().keys,
+      departments: state.departmentList.toList().asMap().keys,
     ));
   }
 
-  void onPressedCheckedCourse(String name) async {
-    final item = state.courses.where((x) => x.name == name).firstOrNull;
+  void onChangedGrade(int grade) {
+    change(state.copyWith(
+      grade: grade,
+    ));
+  }
 
-    if (item is CourseModel) {
-      await showModalBottomSheet(
-        context: Get.context!,
-        builder: (context) => SizedBox(
-          height: 300,
-          child: Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      item.name,
-                      style: textBlack18.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      item.summary,
-                      style: textBlack18,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              ),
-            ),
-          ),
+  void onPressedGrade() async {
+    await showModalBottomSheet<int>(
+      context: Get.context!,
+      builder: (context) => Container(
+        height: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
         ),
-      );
-    }
+        child: CupertinoPicker(
+          scrollController: FixedExtentScrollController(initialItem: state.grade),
+          onSelectedItemChanged: onChangedGrade,
+          itemExtent: 30,
+          backgroundColor: CupertinoColors.white,
+          children: [
+            ...List.generate(8, (i) => Text('${(i + 2) ~/ 2}-${(i + 2) % 2 + 1}학기')),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void onPressedCheckedCourse(String name) {
+    change(state.copyWith(
+      checkedCourses: Map.fromEntries({
+        ...state.checkedCourses.entries.map((x) => x.key == state.grade
+            ? MapEntry(x.key, [
+                ...x.value.contains(name)
+                    ? x.value.where((x) => x != name)
+                    : [
+                        ...x.value,
+                        name,
+                      ],
+              ])
+            : MapEntry(x.key, x.value)),
+      }),
+    ));
   }
 
   void onPressedSelectDepartment(int department) {
@@ -149,5 +153,16 @@ class CourseAddPageController extends GetController<CourseAddPageModel> {
               ],
       ],
     ));
+  }
+
+  void onPressedSave() async {
+    await Future.wait([
+      ...state.checkedCourses.entries.map((x) async {
+        await PrefHelper.setPrefStringList(PrefType.values[x.key], x.value);
+        await PrefHelper.setPrefStringList(
+            PrefType.values.skip(8)[x.key]!, state.courses.where((y) => x.value.contains(y.name)).map((z) => '${z.credit}'));
+      }),
+    ]);
+    Get.back();
   }
 }

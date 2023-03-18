@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ajouthon2023/constant/api.dart';
 import 'package:ajouthon2023/constant/styles.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class MainPage extends GetView<MainPageController> {
                                           child: Align(
                                             alignment: Alignment(-value / 3 - 2 / 3, 0),
                                             child: Text(
-                                              '소프트웨어융합대학',
+                                              collegeList[state.department].elvis,
                                               style: textBlack18.copyWith(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -77,15 +78,19 @@ class MainPage extends GetView<MainPageController> {
                                               crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  '소프트웨어학과',
+                                                  departmentList[state.department].elvis,
                                                   style: textBlack18.copyWith(
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                                 ...[
-                                                  Text('제1복수전공 미디어학과', style: textBlack16),
+                                                  if (state.pluralMajor >= 0 && state.pluralIndex >= 0)
+                                                    Text(
+                                                      '제1${majorList[state.pluralMajor]} ${departmentList[state.pluralIndex]}',
+                                                      style: textBlack14,
+                                                    ),
                                                   const SizedBox(height: 10),
-                                                  Text('202021766', style: textBlack16),
+                                                  Text('${state.id}', style: textBlack14),
                                                 ].map((x) => Visibility(
                                                       visible: opacity > 0,
                                                       child: Opacity(
@@ -118,43 +123,76 @@ class MainPage extends GetView<MainPageController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          '이수 ${state.courses.values.expand((x) => x.map((y) => y.credit)).fold<int>(0, (a, c) => a + c)}/128 학점',
+                          style: textBlack18.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 20),
                       Row(
                         children: [
                           const SizedBox(width: 20),
                           Expanded(
-                            child: Text(
-                              '이수 ${state.courses.values.expand((x) => x.map((y) => y.credit)).fold<int>(0, (a, c) => a + c)}/128 학점',
-                              style: textBlack18.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: Colors.green.shade500,
-                              borderRadius: BorderRadius.circular(6888),
-                            ),
-                            child: Material(
-                              type: MaterialType.transparency,
-                              child: InkWell(
-                                onTap: controller.onPressedList,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.green.shade500,
                                 borderRadius: BorderRadius.circular(6888),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 15),
-                                  child: Text(
-                                    '과목 목록',
-                                    style: textWhite16.copyWith(
-                                      fontWeight: FontWeight.w500,
+                              ),
+                              child: Material(
+                                type: MaterialType.transparency,
+                                child: InkWell(
+                                  onTap: () =>
+                                      controller.onPressedAdd((state.courses.entries.where((x) => x.value.isNullOrEmpty).firstOrNull?.key).elvis),
+                                  borderRadius: BorderRadius.circular(6888),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                                    child: Text(
+                                      '학기 추가',
+                                      style: textWhite16.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.green.shade500,
+                                borderRadius: BorderRadius.circular(6888),
+                              ),
+                              child: Material(
+                                type: MaterialType.transparency,
+                                child: InkWell(
+                                  onTap: controller.onPressedList,
+                                  borderRadius: BorderRadius.circular(6888),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                                    child: Text(
+                                      '과목 목록',
+                                      style: textWhite16.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
                         ],
                       ),
+                      const SizedBox(height: 20),
                       ...state.courses.entries.where((x) => x.value.isset).toList().reversed.expand((x) => [
                             const SizedBox(height: 20),
                             Row(
@@ -197,28 +235,36 @@ class MainPage extends GetView<MainPageController> {
                               ],
                             ),
                             const SizedBox(height: 20),
-                            ...x.value.asMap().entries.map((y) => Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 0,
+                            ...x.value.asMap().entries.map((y) => Dismissible(
+                                  key: UniqueKey(),
+                                  onDismissed: (_) => controller.onDismissed(x.key, y.value.name),
+                                  direction: DismissDirection.endToStart,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 0,
+                                        ),
+                                        borderRadius: [0, x.value.lastIndex].contains(y.key)
+                                            ? BorderRadius.only(
+                                                topLeft: y.key == 0 ? Radius.circular(10) : Radius.zero,
+                                                topRight: y.key == 0 ? Radius.circular(10) : Radius.zero,
+                                                bottomLeft: y.key == x.value.lastIndex ? Radius.circular(10) : Radius.zero,
+                                                bottomRight: y.key == x.value.lastIndex ? Radius.circular(10) : Radius.zero,
+                                              )
+                                            : null,
                                       ),
-                                      borderRadius: [0, x.value.lastIndex].contains(y.key)
-                                          ? BorderRadius.only(
-                                              topLeft: y.key == 0 ? Radius.circular(10) : Radius.zero,
-                                              topRight: y.key == 0 ? Radius.circular(10) : Radius.zero,
-                                              bottomLeft: y.key == x.value.lastIndex ? Radius.circular(10) : Radius.zero,
-                                              bottomRight: y.key == x.value.lastIndex ? Radius.circular(10) : Radius.zero,
-                                            )
-                                          : null,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 10,
-                                        horizontal: 10,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 10,
+                                          horizontal: 10,
+                                        ),
+                                        child: SizedBox(
+                                          width: double.infinity,
+                                          child: Text(y.value.name),
+                                        ),
                                       ),
-                                      child: Text(y.value.name),
                                     ),
                                   ),
                                 )),

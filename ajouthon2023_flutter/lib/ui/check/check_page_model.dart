@@ -19,7 +19,7 @@ class CheckPageModel extends GetModel {
   final int grade;
   final int currentGrade;
   final int department;
-  final List<String> departmentList;
+  final Iterable<String> departmentList;
   final int pluralMajor;
   final int subDepartment;
   final Iterable<CourseModel> courses;
@@ -54,7 +54,7 @@ class CheckPageModel extends GetModel {
     int? grade,
     int? currentGrade,
     int? department,
-    List<String>? departmentList,
+    Iterable<String>? departmentList,
     int? pluralMajor,
     int? subDepartment,
     Iterable<CourseModel>? courses,

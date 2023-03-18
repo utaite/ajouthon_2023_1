@@ -65,7 +65,7 @@ class CourseListPage extends GetView<CourseListPageController> {
                               ),
                             ),
                           ),
-                          ...state.departmentList.asMap().keys.map((x) => DecoratedBox(
+                          ...state.departmentList.toList().asMap().keys.map((x) => DecoratedBox(
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.black,
@@ -81,7 +81,7 @@ class CourseListPage extends GetView<CourseListPageController> {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                       child: Text(
-                                        state.departmentList[x],
+                                        state.departmentList[x].elvis,
                                         style: textBlack10,
                                       ),
                                     ),
@@ -245,7 +245,7 @@ class CourseListPage extends GetView<CourseListPageController> {
                                               child: Padding(
                                                 padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                                 child: Text(
-                                                  y,
+                                                  y.elvis,
                                                   style: textBlack10,
                                                 ),
                                               ),
