@@ -28,7 +28,7 @@ class App extends GetView<AppController> {
       return GetMaterialApp(
         title: 'Clickless',
         debugShowCheckedModeBanner: false,
-        initialRoute: RouteModel.intro().routes.name,
+        initialRoute: RouteModel.splash().routes.name,
         getPages: pages,
         unknownRoute: pages.firstOrNull,
         themeMode: state.brightness.themeMode,

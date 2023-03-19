@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/getx/get_controller.dart';
+import '../../constant/pref_helper.dart';
 import '../../model/route/route_model.dart';
 import 'intro_page_model.dart';
 
@@ -16,101 +17,84 @@ class IntroPageController extends GetController<IntroPageModel> {
     change(state.copyWith(
       id: int.tryParse(value),
     ));
-    print(state);
   }
 
   void onChangedDepartment(int? index) {
     change(state.copyWith(
       department: index,
     ));
-    print(state);
   }
 
   void onChangedGrade(int value) {
     change(state.copyWith(
       grade: value,
     ));
-    print(state);
   }
 
   void onChangedPluralMajor(bool? value) {
     change(state.copyWith(
       isPluralMajor: value,
     ));
-    print(state);
   }
 
   void onChangedExchange(bool? value) {
     change(state.copyWith(
       isExchange: value,
     ));
-    print(state);
   }
 
   void onChangedFieldPractice(bool? value) {
     change(state.copyWith(
       isFieldPractice: value,
     ));
-    print(state);
   }
 
   void onChangedParan(bool? value) {
     change(state.copyWith(
       isParan: value,
     ));
-    print(state);
   }
 
   void onChangedPluralMajorInt(int? index) {
     change(state.copyWith(
       pluralIndex: index,
     ));
-    print(state);
   }
 
   void onChangedPluralMajorValue(int? index) {
     change(state.copyWith(
       pluralMajor: index,
     ));
-    print(state);
   }
 
   void onChangedExchangeGrade(String value) {
     change(state.copyWith(
       exchangeGrade: int.tryParse(value),
     ));
-    print(state);
   }
 
   void onChangedFieldPracticeGrade(String value) {
     change(state.copyWith(
       fieldPracticeGrade: int.tryParse(value),
     ));
-    print(state);
   }
 
   void onChangedParanGrade(String value) {
     change(state.copyWith(
       paranGrade: int.tryParse(value),
     ));
-    print(state);
   }
 
   void onPressedBack() {
-    print('index: ${state.index}');
-
     change(state.copyWith(
       index: state.index - (state.index % 2 == 0 || state.index == 1 ? 1 : 2),
     ));
-
-    print('index: ${state.index}');
   }
 
   void onPressedIndex(int plus) async {
     change(state.copyWith(
       index: state.index + plus,
     ));
-    print(state);
   }
 
   void onPressedGrade() async {
@@ -157,7 +141,6 @@ class IntroPageController extends GetController<IntroPageModel> {
       change(state.copyWith(
         department: index,
       ));
-      print(state);
     }
   }
 
@@ -183,7 +166,6 @@ class IntroPageController extends GetController<IntroPageModel> {
       change(state.copyWith(
         pluralIndex: index,
       ));
-      print(state);
     }
   }
 
@@ -209,14 +191,23 @@ class IntroPageController extends GetController<IntroPageModel> {
       change(state.copyWith(
         pluralMajor: index,
       ));
-      print(state);
     }
   }
 
   void onPressedNext() async {
+    await Future.wait([
+      PrefHelper.setPrefInt(PrefType.id, state.id),
+      PrefHelper.setPrefInt(PrefType.department, state.department),
+      PrefHelper.setPrefInt(PrefType.pluralMajor, state.pluralMajor),
+      PrefHelper.setPrefInt(PrefType.pluralIndex, state.pluralIndex),
+      PrefHelper.setPrefInt(PrefType.exchangeGrade, state.exchangeGrade),
+      PrefHelper.setPrefInt(PrefType.fieldPracticeGrade, state.fieldPracticeGrade),
+      PrefHelper.setPrefInt(PrefType.paranGrade, state.paranGrade),
+    ]);
+
     await RouteModel.check().toNamed(
       arguments: [
-        state.department,
+        [state.grade, state.department, state.pluralMajor, state.pluralIndex],
       ],
     );
   }

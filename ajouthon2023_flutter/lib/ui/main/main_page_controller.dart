@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ajouthon2023/constant/extension.dart';
 
 import '../../constant/getx/get_controller.dart';
@@ -20,16 +22,22 @@ class MainPageController extends GetController<MainPageModel> {
     final credits = await Future.wait([
       ...PrefType.values.skip(8).take(8).map((x) async => await PrefHelper.getPrefStringList(x)),
     ]);
-    final id = 202220635; // await PrefHelper.getPrefInt(PrefType.id);
-    final department = 1; // await PrefHelper.getPrefInt(PrefType.department);
-    final pluralMajor = 1; // await PrefHelper.getPrefInt(PrefType.pluralMajor);
-    final pluralIndex = 0; // await PrefHelper.getPrefInt(PrefType.pluralIndex);
+    final id = await PrefHelper.getPrefInt(PrefType.id);
+    final department = await PrefHelper.getPrefInt(PrefType.department);
+    final pluralMajor = await PrefHelper.getPrefInt(PrefType.pluralMajor);
+    final pluralIndex = await PrefHelper.getPrefInt(PrefType.pluralIndex);
+    final exchangeGrade = await PrefHelper.getPrefInt(PrefType.exchangeGrade);
+    final fieldPracticeGrade = await PrefHelper.getPrefInt(PrefType.fieldPracticeGrade);
+    final paranGrade = await PrefHelper.getPrefInt(PrefType.paranGrade);
 
     change(state.copyWith(
       id: id,
       department: department,
       pluralMajor: pluralMajor,
       pluralIndex: pluralIndex,
+      exchangeGrade: max(0, exchangeGrade),
+      fieldPracticeGrade: max(0, fieldPracticeGrade),
+      paranGrade: max(0, paranGrade),
       courses: Map.fromEntries([
         ...courses.asMap().entries.map((x) => MapEntry(x.key, [
               ...x.value.asMap().entries.map((y) => CourseModel.empty().copyWith(
@@ -62,6 +70,17 @@ class MainPageController extends GetController<MainPageModel> {
     }
   }
 
+  void onDismissedEtc(int key) async {
+    change(state.copyWith(
+      exchangeGrade: key == 0 ? 0 : null,
+      fieldPracticeGrade: key == 1 ? 0 : null,
+      paranGrade: key == 2 ? 0 : null,
+    ));
+
+    final pref = [PrefType.exchangeGrade, PrefType.fieldPracticeGrade, PrefType.paranGrade][key];
+    await PrefHelper.setPrefInt(pref, 0);
+  }
+
   void onPressedList() async {
     await RouteModel.courseList().toNamed();
   }
@@ -92,5 +111,21 @@ class MainPageController extends GetController<MainPageModel> {
             ])),
       ]),
     ));
+  }
+
+  void onPressedReset() async {
+    change(state.copyWith(
+      courses: {},
+    ));
+
+    await Future.wait([
+      ...List.generate(8, (i) => i).map((x) async {
+        await PrefHelper.setPrefStringList(PrefType.values[x], []);
+        await PrefHelper.setPrefStringList(PrefType.values.skip(8)[x]!, []);
+      }),
+      PrefHelper.setPrefInt(PrefType.exchangeGrade, 0),
+      PrefHelper.setPrefInt(PrefType.fieldPracticeGrade, 0),
+      PrefHelper.setPrefInt(PrefType.paranGrade, 0),
+    ]);
   }
 }

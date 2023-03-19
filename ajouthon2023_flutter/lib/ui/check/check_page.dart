@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../../constant/colors.dart';
 import '../../constant/extension.dart';
 import '../../constant/styles.dart';
 import 'check_page_controller.dart';
@@ -20,15 +21,39 @@ class CheckPage extends GetView<CheckPageController> {
           leading: BackButton(
             color: Colors.black,
           ),
+          actions: [
+            TextButton(
+              onPressed: controller.onPressedNext,
+              child: Text(
+                '다음',
+                style: textBlack14,
+              ),
+            ),
+          ],
           title: Text('수강 과목 선택'),
         ),
         backgroundColor: context.theme.scaffoldBackgroundColor,
         body: SafeArea(
           child: controller.rx((state) {
-            final filters = state.courses.where((x) =>
-                (state.selectDepartments.isNullOrEmpty || state.selectDepartments.contains(x.department)) &&
-                (state.selectGrades.isNullOrEmpty || state.selectGrades.contains(x.grade)) &&
-                (state.selectTypes.isNullOrEmpty || state.selectTypes.contains(x.type)));
+            final filters = state.courses
+                .where((x) =>
+                    (state.selectDepartments.isNullOrEmpty || state.selectDepartments.contains(x.department)) &&
+                    (state.selectGrades.isNullOrEmpty || state.selectGrades.contains(x.grade)) &&
+                    (state.selectTypes.isNullOrEmpty || state.selectTypes.contains(x.type)))
+                .toList()
+              ..sort((a, b) {
+                if ((state.currentGrade - a.grade).abs() != (state.currentGrade - b.grade).abs()) {
+                  return (state.currentGrade - a.grade).abs().compareTo((state.currentGrade - b.grade).abs());
+                } else if (a.type % 2 != b.type % 2) {
+                  return (a.type % 2).compareTo(b.type % 2);
+                }
+
+                return a.name.compareTo(b.name);
+              });
+            final totalCredit = state.checkedCourses[state.currentGrade - 1].elvis
+                .map((x) => state.courses.where((y) => y.name == x).firstOrNull)
+                .map((x) => (x?.credit).elvis)
+                .fold<int>(0, (a, c) => a + c);
 
             return CustomScrollView(
               slivers: [
@@ -82,12 +107,20 @@ class CheckPage extends GetView<CheckPageController> {
                                 child: const SizedBox(width: 5),
                               ),
                               TextSpan(
-                                text: '${state.grade == state.currentGrade ? '수강중인' : '수강했던'} 과목을 선택해주세요.',
+                                text: '${state.grade == state.currentGrade ? '수강중인' : '수강한'} 과목을 선택해주세요.',
                                 style: textBlack22.copyWith(
                                   fontWeight: FontWeight.bold,
                                   height: 4 / 3,
                                 ),
                               ),
+                              if (totalCredit > 0)
+                                TextSpan(
+                                  text: '($totalCredit학점)',
+                                  style: textBlack22.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    height: 4 / 3,
+                                  ),
+                                ),
                             ],
                           ),
                         ),
@@ -113,9 +146,10 @@ class CheckPage extends GetView<CheckPageController> {
                             ...state.departments.map((x) => DecoratedBox(
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Colors.black,
+                                      color: colorPrimary,
                                     ),
-                                    color: state.selectDepartments.contains(x) ? Colors.green.shade100 : context.theme.scaffoldBackgroundColor,
+                                    color:
+                                        state.selectDepartments.contains(x) ? colorPrimary.withOpacity(1 / 4) : context.theme.scaffoldBackgroundColor,
                                     borderRadius: BorderRadius.circular(6888),
                                   ),
                                   child: Material(
@@ -127,7 +161,9 @@ class CheckPage extends GetView<CheckPageController> {
                                         padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                         child: Text(
                                           state.departmentList[x].elvis,
-                                          style: textBlack10,
+                                          style: textBlack10.copyWith(
+                                            color: colorPrimary,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -157,9 +193,9 @@ class CheckPage extends GetView<CheckPageController> {
                             ...List.generate(8, (i) => i + 1).map((x) => DecoratedBox(
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Colors.black,
+                                      color: colorPrimary,
                                     ),
-                                    color: state.selectGrades.contains(x) ? Colors.green.shade100 : context.theme.scaffoldBackgroundColor,
+                                    color: state.selectGrades.contains(x) ? colorPrimary.withOpacity(1 / 4) : context.theme.scaffoldBackgroundColor,
                                     borderRadius: BorderRadius.circular(6888),
                                   ),
                                   child: Material(
@@ -171,7 +207,9 @@ class CheckPage extends GetView<CheckPageController> {
                                         padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                         child: Text(
                                           '${(x + 1) ~/ 2}-${(x + 1) % 2 + 1}학기',
-                                          style: textBlack10,
+                                          style: textBlack10.copyWith(
+                                            color: colorPrimary,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -199,9 +237,9 @@ class CheckPage extends GetView<CheckPageController> {
                             ...List.generate(3, (i) => i).map((x) => DecoratedBox(
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Colors.black,
+                                      color: colorPrimary,
                                     ),
-                                    color: state.selectTypes.contains(x) ? Colors.green.shade100 : context.theme.scaffoldBackgroundColor,
+                                    color: state.selectTypes.contains(x) ? colorPrimary.withOpacity(1 / 4) : context.theme.scaffoldBackgroundColor,
                                     borderRadius: BorderRadius.circular(6888),
                                   ),
                                   child: Material(
@@ -213,7 +251,9 @@ class CheckPage extends GetView<CheckPageController> {
                                         padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                         child: Text(
                                           ['전공필수', '전공선택', '교양필수'][x].elvis,
-                                          style: textBlack10,
+                                          style: textBlack10.copyWith(
+                                            color: colorPrimary,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -230,7 +270,7 @@ class CheckPage extends GetView<CheckPageController> {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              color: isActive ? Colors.green.shade100 : null,
+                              color: isActive ? colorPrimary.withOpacity(1 / 4) : null,
                               border: Border.all(
                                 width: 0,
                               ),
@@ -274,7 +314,7 @@ class CheckPage extends GetView<CheckPageController> {
                                           visible: isActive,
                                           child: Icon(
                                             Icons.check,
-                                            color: Colors.green,
+                                            color: colorPrimary,
                                           ),
                                         ),
                                         const SizedBox(width: 10),
@@ -292,7 +332,7 @@ class CheckPage extends GetView<CheckPageController> {
                                           ].map((y) => DecoratedBox(
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                    color: isActive ? Colors.green : Colors.black,
+                                                    color: colorPrimary,
                                                   ),
                                                   color: context.theme.scaffoldBackgroundColor,
                                                   borderRadius: BorderRadius.circular(6888),
@@ -301,7 +341,9 @@ class CheckPage extends GetView<CheckPageController> {
                                                   padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                                   child: Text(
                                                     y.elvis,
-                                                    style: textBlack10,
+                                                    style: textBlack10.copyWith(
+                                                      color: colorPrimary,
+                                                    ),
                                                   ),
                                                 ),
                                               )),
@@ -316,33 +358,6 @@ class CheckPage extends GetView<CheckPageController> {
                           ),
                         );
                       }),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: state.checkedCourses.values.every((x) => x.isset) ? Colors.green.shade400 : Colors.grey,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Material(
-                            type: MaterialType.transparency,
-                            child: InkWell(
-                              onTap: state.checkedCourses.values.every((x) => x.isset) ? controller.onPressedNext : null,
-                              borderRadius: BorderRadius.circular(15),
-                              child: Padding(
-                                padding: const EdgeInsets.all(15),
-                                child: Text(
-                                  '완료',
-                                  style: textWhite16.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 20),
                     ],
                   ),

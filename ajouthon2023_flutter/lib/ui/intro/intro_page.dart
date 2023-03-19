@@ -1,6 +1,5 @@
 import 'package:ajouthon2023/constant/getx/get_rx_impl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../../constant/extension.dart';
 import 'intro_page_controller.dart';
@@ -443,9 +442,7 @@ class IntroPage extends GetView<IntroPageController> {
                               Text(
                                   "파란학기 ${state.paranGrade == 0 ? '-' : state.paranGrade}"),
                               Center(
-                                  child: TextButton(
-                                      onPressed: () {},
-                                      child: Text("Data send Test"))),
+                                  child: TextButton(onPressed: controller.onPressedNext, child: Text("Data send Test"))),
                             ],
                           )
                         ],
