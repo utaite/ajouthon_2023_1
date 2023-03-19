@@ -16,7 +16,7 @@ class SplashPageController extends GetController<SplashPageModel> {
   @override
   void onInit() async {
     super.onInit();
-    PrefHelper.clear();
+    // PrefHelper.clear();
 
     final id = await PrefHelper.getPrefInt(PrefType.id);
     await Future.delayed(Duration(seconds: (id >= 0 ? 1 : 2)));
