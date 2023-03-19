@@ -42,7 +42,7 @@ class CourseModel extends GetModel {
   @override
   bool get isEmpty => this == _empty;
 
-  String get typeString => ['전공필수', '전공선택', '교양필수'][type].elvis;
+  String get typeString => ['교양필수', '전공필수', '전공선택'][type].elvis;
 
   String get gradeString => '${(grade + 1) ~/ 2}-${(grade + 1) % 2 + 1}학기';
 
