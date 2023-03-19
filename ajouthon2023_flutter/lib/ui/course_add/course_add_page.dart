@@ -262,7 +262,7 @@ class CourseAddPage extends GetView<CourseAddPageController> {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 5),
                                       child: Text(
-                                        ['교양필수, ''전공필수', '전공선택'][x].elvis,
+                                        ['교양필수' ,'전공필수', '전공선택'][x].elvis,
                                         style: textBlack10.copyWith(
                                           color: colorPrimary,
                                         ),
