@@ -85,9 +85,9 @@ class MainPage extends GetView<MainPageController> {
                                                   ),
                                                 ),
                                                 ...[
-                                                  if (state.pluralMajor >= 0 && state.pluralIndex >= 0)
+                                                  if (state.pluralIndex >= 0 && state.pluralMajor >= 0)
                                                     Text(
-                                                      '제1${state.majorList[state.pluralMajor]} ${state.departmentList[state.pluralIndex]}',
+                                                      '제1${state.majorList[state.pluralIndex]} ${state.departmentList[state.pluralMajor]}',
                                                       style: textBlack14,
                                                     ),
                                                   const SizedBox(height: 10),
